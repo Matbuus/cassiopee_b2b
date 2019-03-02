@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\MetierRepository")
  */
-class Client
+class Metier
 {
     /**
      * @ORM\Id()
@@ -19,45 +19,27 @@ class Client
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $nom;
+    private $titre;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    protected $prenom;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PortailB2B", inversedBy="clients")
+     * @ORM\ManyToOne(targetEntity="App\Entity\PortailB2B", inversedBy="metiers")
      * @ORM\JoinColumn(nullable=false)
      */
     private $portailB2B;
-
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getTitre(): ?string
     {
-        return $this->nom;
+        return $this->titre;
     }
 
-    public function setNom(string $nom): self
+    public function setTitre(string $titre): self
     {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
-
-    public function setPrenom(string $prenom): self
-    {
-        $this->prenom = $prenom;
+        $this->titre = $titre;
 
         return $this;
     }
@@ -73,5 +55,4 @@ class Client
 
         return $this;
     }
-
 }

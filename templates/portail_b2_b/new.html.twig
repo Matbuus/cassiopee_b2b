@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New PortailB2B{% endblock %}
+
+{% block body %}
+    <h1>Create new PortailB2B</h1>
+
+    {{ include('portail_b2_b/_form.html.twig') }}
+
+    <a href="{{ path('portail_b2_b_index') }}">back to list</a>
+{% endblock %}

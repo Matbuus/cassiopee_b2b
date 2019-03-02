@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PortailB2B{% endblock %}
+
+{% block body %}
+    <h1>PortailB2B</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ portail_b2_b.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ portail_b2_b.nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('portail_b2_b_index') }}">back to list</a>
+
+    <a href="{{ path('portail_b2_b_edit', {'id': portail_b2_b.id}) }}">edit</a>
+
+    {{ include('portail_b2_b/_delete_form.html.twig') }}
+{% endblock %}
