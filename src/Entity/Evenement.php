@@ -28,7 +28,7 @@ class Evenement
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PortailB2B", inversedBy="evenements")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $portailB2B;
 

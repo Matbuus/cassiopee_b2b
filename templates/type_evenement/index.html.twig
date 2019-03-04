@@ -19,8 +19,8 @@
                 <td>{{ type_evenement.id }}</td>
                 <td>{{ type_evenement.nom }}</td>
                 <td>
-                    <a href="{{ path('type_evenement_show', {'id': type_evenement.id}) }}">show</a>
-                    <a href="{{ path('type_evenement_edit', {'id': type_evenement.id}) }}">edit</a>
+                    <a href="{{ path('admin_type_event_show', {'id': type_evenement.id}) }}">show</a>
+                    <a href="{{ path('admin_type_event_edit', {'id': type_evenement.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -31,5 +31,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('type_evenement_new') }}">Create new</a>
+    <a href="{{ path('admin_type_event_new') }}">Create new</a>
 {% endblock %}

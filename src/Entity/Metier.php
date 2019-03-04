@@ -23,7 +23,7 @@ class Metier
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PortailB2B", inversedBy="metiers")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $portailB2B;
 

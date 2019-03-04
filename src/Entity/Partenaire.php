@@ -18,7 +18,7 @@ class Partenaire extends Client
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PortailB2B", inversedBy="partenaires")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $portailB2B;
 

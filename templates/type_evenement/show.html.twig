@@ -18,9 +18,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('type_evenement_index') }}">back to list</a>
+    <a href="{{ path('admin_type_event') }}">back to list</a>
 
-    <a href="{{ path('type_evenement_edit', {'id': type_evenement.id}) }}">edit</a>
+    <a href="{{ path('admin_type_event_edit', {'id': type_evenement.id}) }}">edit</a>
 
     {{ include('type_evenement/_delete_form.html.twig') }}
 {% endblock %}

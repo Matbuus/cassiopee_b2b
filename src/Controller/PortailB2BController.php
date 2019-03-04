@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/portail/b2/b")
+ * @Route("/portail/b2b")
  */
 class PortailB2BController extends AbstractController
 {
