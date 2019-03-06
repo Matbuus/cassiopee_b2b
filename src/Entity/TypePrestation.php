@@ -31,6 +31,16 @@ class TypePrestation
      */
     private $tarifPublic;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Metier", inversedBy="typesPrestations")
+     */
+    private $metier;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Partenaire", inversedBy="typesPrestationsEnCatalogue")
+     */
+    private $partenaire;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +78,30 @@ class TypePrestation
     public function setTarifPublic(float $tarifPublic): self
     {
         $this->tarifPublic = $tarifPublic;
+
+        return $this;
+    }
+
+    public function getMetier(): ?Metier
+    {
+        return $this->metier;
+    }
+
+    public function setMetier(?Metier $metier): self
+    {
+        $this->metier = $metier;
+
+        return $this;
+    }
+
+    public function getPartenaire(): ?Partenaire
+    {
+        return $this->partenaire;
+    }
+
+    public function setPartenaire(?Partenaire $partenaire): self
+    {
+        $this->partenaire = $partenaire;
 
         return $this;
     }

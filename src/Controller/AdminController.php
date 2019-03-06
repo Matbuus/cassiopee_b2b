@@ -183,7 +183,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/localisation", name="admin_localisation", methods={"GET"})
      */
-    public function index(LocalisationRepository $localisationRepository): Response
+    public function indexLocalisation(LocalisationRepository $localisationRepository): Response
     {
         return $this->render('localisation/index.html.twig', [
             'localisations' => $localisationRepository->findAll(),
@@ -193,7 +193,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/localisation/new", name="admin_localisation_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function newLocalisation(Request $request): Response
     {
         $localisation = new Localisation();
         $form = $this->createForm(LocalisationType::class, $localisation);
@@ -216,7 +216,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/localisation/{id}", name="admin_localisation_show", methods={"GET"})
      */
-    public function show(Localisation $localisation): Response
+    public function showLocalisation(Localisation $localisation): Response
     {
         return $this->render('localisation/show.html.twig', [
             'localisation' => $localisation,
@@ -226,7 +226,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/localisation/{id}/edit", name="admin_localisation_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Localisation $localisation): Response
+    public function editLocalisation(Request $request, Localisation $localisation): Response
     {
         $form = $this->createForm(LocalisationType::class, $localisation);
         $form->handleRequest($request);
@@ -248,7 +248,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/localisation/{id}", name="admin_localisation_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Localisation $localisation): Response
+    public function deleteLocalisation(Request $request, Localisation $localisation): Response
     {
         if ($this->isCsrfTokenValid('delete'.$localisation->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
