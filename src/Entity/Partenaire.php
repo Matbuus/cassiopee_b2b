@@ -125,4 +125,14 @@ class Partenaire extends Client
         return $this;
     }
 
+    public function getPortailB2B(): ?PortailB2B
+    {
+        return $this->portailB2B;
+    }
+    
+    public function setPortailB2B(?PortailB2B $portailB2B)
+    {
+        $this->portailB2B = $portailB2B;
+    }
+
 }

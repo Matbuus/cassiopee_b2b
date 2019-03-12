@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypePrestation{% endblock %}
+
+{% block body %}
+    <h1>TypePrestation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ type_prestation.id }}</td>
+            </tr>
+            <tr>
+                <th>NomType</th>
+                <td>{{ type_prestation.nomType }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ type_prestation.description }}</td>
+            </tr>
+            <tr>
+                <th>TarifPublic</th>
+                <td>{{ type_prestation.tarifPublic }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_type_prestation') }}">back to list</a>
+
+    <a href="{{ path('admin_type_prestation_edit', {'id': type_prestation.id}) }}">edit</a>
+
+    {{ include('type_prestation/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypePrestation index{% endblock %}
+
+{% block body %}
+    <h1>TypePrestation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NomType</th>
+                <th>Description</th>
+                <th>TarifPublic</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for type_prestation in type_prestations %}
+            <tr>
+                <td>{{ type_prestation.id }}</td>
+                <td>{{ type_prestation.nomType }}</td>
+                <td>{{ type_prestation.description }}</td>
+                <td>{{ type_prestation.tarifPublic }}</td>
+                <td>
+                    <a href="{{ path('admin_type_prestation_show', {'id': type_prestation.id}) }}">show</a>
+                    <a href="{{ path('admin_type_prestation_edit', {'id': type_prestation.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_type_prestation_new') }}">Create new</a>
+{% endblock %}

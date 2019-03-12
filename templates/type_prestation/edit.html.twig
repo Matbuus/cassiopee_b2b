@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit TypePrestation{% endblock %}
+
+{% block body %}
+    <h1>Edit TypePrestation</h1>
+
+    {{ include('type_prestation/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('admin_type_prestation') }}">back to list</a>
+
+    {{ include('type_prestation/_delete_form.html.twig') }}
+{% endblock %}
