@@ -32,12 +32,12 @@ class Metier
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Partenaire", mappedBy="metier")
      */
-    private $partenaires2;
+    private $partenaires;
 
     public function __construct()
     {
         $this->typesPrestations = new ArrayCollection();
-        $this->partenaires2 = new ArrayCollection();
+        $this->partenaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -96,28 +96,28 @@ class Metier
     /**
      * @return Collection|Partenaire[]
      */
-    public function getPartenaires2(): Collection
+    public function getPartenaires(): Collection
     {
-        return $this->partenaires2;
+        return $this->partenaires;
     }
 
-    public function addPartenaires2(Partenaire $partenaires2): self
+    public function addPartenaires(Partenaire $partenaires): self
     {
-        if (!$this->partenaires2->contains($partenaires2)) {
-            $this->partenaires2[] = $partenaires2;
-            $partenaires2->setMetier($this);
+        if (!$this->partenaires->contains($partenaires)) {
+            $this->partenaires[] = $partenaires;
+            $partenaires->setMetier($this);
         }
 
         return $this;
     }
 
-    public function removePartenaires2(Partenaire $partenaires2): self
+    public function removePartenaires(Partenaire $partenaires): self
     {
-        if ($this->partenaires2->contains($partenaires2)) {
-            $this->partenaires2->removeElement($partenaires2);
+        if ($this->partenaires->contains($partenaires)) {
+            $this->partenaires->removeElement($partenaires);
             // set the owning side to null (unless already changed)
-            if ($partenaires2->getMetier() === $this) {
-                $partenaires2->setMetier(null);
+            if ($partenaires->getMetier() === $this) {
+                $partenaires->setMetier(null);
             }
         }
 

@@ -38,7 +38,7 @@ class TypePrestation
     private $metier;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Partenaire", inversedBy="typesPrestationsEnCatalogue")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Partenaire", inversedBy="typesPrestationsEnCatalogue")
      */
     private $partenaire;
 

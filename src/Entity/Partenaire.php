@@ -24,12 +24,12 @@ class Partenaire extends Client
     private $prestationProposee;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TypePrestation", mappedBy="partenaire")
+     * @ORM\ManyToMany(targetEntity="App\Entity\TypePrestation", mappedBy="partenaire")
      */
     private $typesPrestationsEnCatalogue;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Metier", inversedBy="partenaires2")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Metier", inversedBy="partenaires")
      * @ORM\JoinColumn(nullable=false)
      */
     private $metier;
