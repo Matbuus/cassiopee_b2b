@@ -18,31 +18,30 @@ class Partenaire extends Client
      */
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PortailB2B", inversedBy="partenaires")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $portailB2B;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Metier", mappedBy="partenaires")
-     */
-    private $metiers;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Prestation", inversedBy="partenaire", cascade={"persist", "remove"})
      */
     private $prestationProposee;
 
+
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TypePrestation", mappedBy="partenaire")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Metier", inversedBy="partenaires")
      */
-    private $typesPrestationsEnCatalogue;
+    private $metier;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\TypePrestation", mappedBy="partenaires")
+     */
+    private $typePrestations;
 
     public function __construct()
     {
         $this->metiers = new ArrayCollection();
         $this->typesPrestationsEnCatalogue = new ArrayCollection();
+        $this->typesPrestation = new ArrayCollection();
+        $this->typePrestations = new ArrayCollection();
     }
 
 
@@ -59,28 +58,6 @@ class Partenaire extends Client
         return $this->metiers;
     }
 
-    public function addMetier(Metier $metier): self
-    {
-        if (!$this->metiers->contains($metier)) {
-            $this->metiers[] = $metier;
-            $metier->setPartenaires($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMetier(Metier $metier): self
-    {
-        if ($this->metiers->contains($metier)) {
-            $this->metiers->removeElement($metier);
-            // set the owning side to null (unless already changed)
-            if ($metier->getPartenaires() === $this) {
-                $metier->setPartenaires(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getPrestationProposee(): ?Prestation
     {
@@ -94,45 +71,47 @@ class Partenaire extends Client
         return $this;
     }
 
+
+    public function getMetier(): ?Metier
+    {
+        return $this->metier;
+    }
+
+    public function setMetier(?Metier $metier): self
+    {
+        $this->metier = $metier;
+
+        return $this;
+    }
+
+
     /**
      * @return Collection|TypePrestation[]
      */
-    public function getTypesPrestationsEnCatalogue(): Collection
+    public function getTypePrestations(): Collection
     {
-        return $this->typesPrestationsEnCatalogue;
+        return $this->typePrestations;
     }
 
-    public function addTypesPrestationsEnCatalogue(TypePrestation $typesPrestationsEnCatalogue): self
+    public function addTypePrestation(TypePrestation $typePrestation): self
     {
-        if (!$this->typesPrestationsEnCatalogue->contains($typesPrestationsEnCatalogue)) {
-            $this->typesPrestationsEnCatalogue[] = $typesPrestationsEnCatalogue;
-            $typesPrestationsEnCatalogue->setPartenaire($this);
+        if (!$this->typePrestations->contains($typePrestation)) {
+            $this->typePrestations[] = $typePrestation;
+            $typePrestation->addPartenaire($this);
         }
 
         return $this;
     }
 
-    public function removeTypesPrestationsEnCatalogue(TypePrestation $typesPrestationsEnCatalogue): self
+    public function removeTypePrestation(TypePrestation $typePrestation): self
     {
-        if ($this->typesPrestationsEnCatalogue->contains($typesPrestationsEnCatalogue)) {
-            $this->typesPrestationsEnCatalogue->removeElement($typesPrestationsEnCatalogue);
-            // set the owning side to null (unless already changed)
-            if ($typesPrestationsEnCatalogue->getPartenaire() === $this) {
-                $typesPrestationsEnCatalogue->setPartenaire(null);
-            }
+        if ($this->typePrestations->contains($typePrestation)) {
+            $this->typePrestations->removeElement($typePrestation);
+            $typePrestation->removePartenaire($this);
         }
 
         return $this;
     }
 
-    public function getPortailB2B(): ?PortailB2B
-    {
-        return $this->portailB2B;
-    }
-    
-    public function setPortailB2B(?PortailB2B $portailB2B)
-    {
-        $this->portailB2B = $portailB2B;
-    }
 
 }

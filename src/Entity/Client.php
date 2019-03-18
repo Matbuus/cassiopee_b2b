@@ -27,11 +27,7 @@ class Client
      */
     protected $prenom;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PortailB2B", inversedBy="clients")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $portailB2B;
+
 
 
     public function getId(): ?int
@@ -61,16 +57,6 @@ class Client
         $this->prenom = $prenom;
 
         return $this;
-    }
-    public function getPortailB2B(): ?PortailB2B
-    {
-        return $this->portailB2B;
-    }
-    
-    public function setPortailB2B(?PortailB2B $portailB2B)
-    {
-        $this->portailB2B = $portailB2B;
-        
     }
 
 
