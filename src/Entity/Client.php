@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Entity;
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  * @ORM\MappedSuperclass()
@@ -18,62 +15,44 @@ class Client
      * @ORM\Column(type="integer")
      */
     private $id;
-
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     protected $nom;
-
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     protected $prenom;
-
-<<<<<<< HEAD
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Evenement", mappedBy="client", orphanRemoval=true)
      */
     private $evenements;
-
     public function __construct()
     {
         $this->evenements = new ArrayCollection();
     }
-=======
-
->>>>>>> f9672a78732d11f1605be45a0808772bf184f83f
-
-
     public function getId(): ?int
     {
         return $this->id;
     }
-
     public function getNom(): ?string
     {
         return $this->nom;
     }
-
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
-
         return $this;
     }
-
     public function getPrenom(): ?string
     {
         return $this->prenom;
     }
-
     public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
-
         return $this;
     }
-<<<<<<< HEAD
-
     /**
      * @return Collection|Evenement[]
      */
@@ -81,17 +60,14 @@ class Client
     {
         return $this->evenements;
     }
-
     public function addEvenement(Evenement $evenement): self
     {
         if (!$this->evenements->contains($evenement)) {
             $this->evenements[] = $evenement;
             $evenement->setClient($this);
         }
-
         return $this;
     }
-
     public function removeEvenement(Evenement $evenement): self
     {
         if ($this->evenements->contains($evenement)) {
@@ -101,12 +77,7 @@ class Client
                 $evenement->setClient(null);
             }
         }
-
         return $this;
     }
     
-=======
->>>>>>> f9672a78732d11f1605be45a0808772bf184f83f
-
-
 }

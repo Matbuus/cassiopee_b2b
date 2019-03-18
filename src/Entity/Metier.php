@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Entity;
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MetierRepository")
  */
@@ -17,47 +14,36 @@ class Metier
      * @ORM\Column(type="integer")
      */
     private $id;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $titre;
-
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TypePrestation", mappedBy="metier")
      */
     private $typesPrestations;
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Partenaire", mappedBy="metier")
      */
     private $partenaires;
-
     public function __construct()
     {
         $this->typesPrestations = new ArrayCollection();
         $this->partenaires = new ArrayCollection();
     }
-
     public function getId(): ?int
     {
         return $this->id;
     }
-
     public function getTitre(): ?string
     {
         return $this->titre;
     }
-
     public function setTitre(string $titre): self
     {
         $this->titre = $titre;
-
         return $this;
     }
-
-
     /**
      * @return Collection|TypePrestation[]
      */
@@ -65,17 +51,14 @@ class Metier
     {
         return $this->typesPrestations;
     }
-
     public function addTypesPrestation(TypePrestation $typesPrestation): self
     {
         if (!$this->typesPrestations->contains($typesPrestation)) {
             $this->typesPrestations[] = $typesPrestation;
             $typesPrestation->setMetier($this);
         }
-
         return $this;
     }
-
     public function removeTypesPrestation(TypePrestation $typesPrestation): self
     {
         if ($this->typesPrestations->contains($typesPrestation)) {
@@ -85,14 +68,11 @@ class Metier
                 $typesPrestation->setMetier(null);
             }
         }
-
         return $this;
     }
-
     public function __toString(){
         return $this->getTitre();
     }
-
     /**
      * @return Collection|Partenaire[]
      */
@@ -100,17 +80,14 @@ class Metier
     {
         return $this->partenaires;
     }
-
     public function addPartenaires(Partenaire $partenaires): self
     {
         if (!$this->partenaires->contains($partenaires)) {
             $this->partenaires[] = $partenaires;
             $partenaires->setMetier($this);
         }
-
         return $this;
     }
-
     public function removePartenaires(Partenaire $partenaires): self
     {
         if ($this->partenaires->contains($partenaires)) {
@@ -120,7 +97,6 @@ class Metier
                 $partenaires->setMetier(null);
             }
         }
-
         return $this;
     }
 }

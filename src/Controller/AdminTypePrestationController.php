@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\TypeEvenement;
 use App\Form\TypeEvenementType;
-use App\Form\TypePrestation1Type;
+use App\Form\TypePrestationType;
 use App\Repository\MetierRepository;
 use App\Repository\TypeEvenementRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +16,6 @@ use App\Repository\LocalisationRepository;
 use App\Entity\Metier;
 use App\Form\MetierType;
 use App\Entity\TypePrestation;
-use App\Form\TypePrestationType;
 use App\Repository\TypePrestationRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -48,7 +47,7 @@ class AdminTypePrestationController extends AbstractController
     public function addTypePrestation(Request $request, Metier $metier): Response
     {
         $typePrestation = new TypePrestation();
-        $form = $this->createForm(TypePrestation1Type::class, $typePrestation);
+        $form = $this->createForm(TypePrestationType::class, $typePrestation);
         $form->handleRequest($request);
         dump($metier);
         if ($form->isSubmitted() && $form->isValid()) {
