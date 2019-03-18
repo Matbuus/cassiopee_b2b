@@ -29,6 +29,7 @@ class Client
      */
     protected $prenom;
 
+<<<<<<< HEAD
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Evenement", mappedBy="client", orphanRemoval=true)
      */
@@ -38,6 +39,9 @@ class Client
     {
         $this->evenements = new ArrayCollection();
     }
+=======
+
+>>>>>>> f9672a78732d11f1605be45a0808772bf184f83f
 
 
     public function getId(): ?int
@@ -68,6 +72,7 @@ class Client
 
         return $this;
     }
+<<<<<<< HEAD
 
     /**
      * @return Collection|Evenement[]
@@ -100,6 +105,8 @@ class Client
         return $this;
     }
     
+=======
+>>>>>>> f9672a78732d11f1605be45a0808772bf184f83f
 
 
 }
