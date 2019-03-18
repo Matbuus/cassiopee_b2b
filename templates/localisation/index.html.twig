@@ -21,8 +21,8 @@
                 <td>{{ localisation.longitude }}</td>
                 <td>{{ localisation.latitude }}</td>
                 <td>
-                    <a href="{{ path('localisation_show', {'id': localisation.id}) }}">show</a>
-                    <a href="{{ path('localisation_edit', {'id': localisation.id}) }}">edit</a>
+                    <a href="{{ path('admin_localisation_show', {'id': localisation.id}) }}">show</a>
+                    <a href="{{ path('admin_localisation_edit', {'id': localisation.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +33,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('localisation_new') }}">Create new</a>
+    <a href="{{ path('admin_localisation_new') }}">Create new</a>
 {% endblock %}

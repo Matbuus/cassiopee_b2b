@@ -26,6 +26,12 @@ class Evenement
      */
     private $date;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="evenements")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $client;
+
 
     public function getId(): ?int
     {
@@ -52,6 +58,18 @@ class Evenement
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
 
         return $this;
     }

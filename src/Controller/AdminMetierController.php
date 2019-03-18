@@ -68,8 +68,10 @@ class AdminMetierController extends AbstractController
      */
     public function showMetier(Metier $metier): Response
     {
+        $typesPrestations = $metier->getTypesPrestations();
         return $this->render('metier/show.html.twig', [
             'metier' => $metier,
+            'typesPrestations' => $typesPrestations,
         ]);
     }
     

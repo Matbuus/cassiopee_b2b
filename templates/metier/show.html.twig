@@ -17,10 +17,41 @@
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('admin_metier') }}">back to list</a>
-
+    
+	<a href="{{ path('admin_metier') }}">back to list</a>
     <a href="{{ path('admin_metier_edit', {'id': metier.id}) }}">edit</a>
+    
+    
+    <h1> Types de prestation pour le metier {{ metier.titre }}</h1>
+     <table class="table">
+        <thead>
+            <tr>
+                <th>Nom Type</th>
+                <th>Description</th>
+                <th>Tarif Public</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for type_prestation in typesPrestations %}
+            <tr>
+                <td>{{ type_prestation.nomType }}</td>
+                <td>{{ type_prestation.description }}</td>
+                <td>{{ type_prestation.tarifPublic }}</td>
+                <td>
+     {{ include('type_prestation/_delete_form.html.twig') }}
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('admin_type_prestation_add', {'id': metier.id}) }}">nouveau type de prestation</a>
+
+
 
     {{ include('metier/_delete_form.html.twig') }}
 {% endblock %}

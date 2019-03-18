@@ -2,24 +2,25 @@
 
 namespace App\Form;
 
-use App\Entity\PortailB2B;
+use App\Entity\Evenement;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PortailB2BType extends AbstractType
+class EvenementType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom')
+            ->add('titre')
+            ->add('date')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => PortailB2B::class,
+            'data_class' => Evenement::class,
         ]);
     }
 }

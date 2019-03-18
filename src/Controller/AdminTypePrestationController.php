@@ -52,6 +52,7 @@ class AdminTypePrestationController extends AbstractController
         $form->handleRequest($request);
         dump($metier);
         if ($form->isSubmitted() && $form->isValid()) {
+            $typePrestation->setMetier($metier);
             $metier->addTypesPrestation($typePrestation);
             $em = $this->getDoctrine()->getManager();
             $em->persist($typePrestation);
@@ -60,8 +61,11 @@ class AdminTypePrestationController extends AbstractController
             
             $this->get('session')->getFlashBag()->add('message', 'type de prestation bien ajoutée au métier');
             
-            return $this->redirectToRoute('admin_type_prestation');
+            $response = $this->forward('App\Controller\AdminMetierController::showMetier', ['id' => $metier->getId(),]);
+            return $response;
         }
+        
+
         
         return $this->render('type_prestation/new.html.twig', [
             'metier' => $metier,
@@ -107,36 +111,17 @@ class AdminTypePrestationController extends AbstractController
      */
     public function deleteTypePrestation(Request $request, TypePrestation $typePrestation): Response
     {
+        $id = $typePrestation->getMetier()->getId();
         if ($this->isCsrfTokenValid('delete'.$typePrestation->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($typePrestation);
             $entityManager->flush();
         }
         
-        return $this->redirectToRoute('admin_type_prestation');
-    }
-    
-    /**
-     * @Route("/type_prestation/new", name="admin_type_prestation_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $typePrestation = new TypePrestation();
-        $form = $this->createForm(TypePrestationType::class, $typePrestation);
-        $form->handleRequest($request);
+        $response = $this->forward('App\Controller\AdminMetierController::showMetier', ['id' => $id,]);
         
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($typePrestation);
-            $entityManager->flush();
-            
-            return $this->redirectToRoute('admin_type_prestation');
-        }
-        
-        return $this->render('type_prestation/new.html.twig', [
-            'type_prestation' => $typePrestation,
-            'form' => $form->createView(),
-        ]);
+        return $response;
     }
+   
     
 }

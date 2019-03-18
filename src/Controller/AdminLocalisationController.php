@@ -52,7 +52,7 @@ class AdminLocalisationController extends AbstractController
             $entityManager->persist($localisation);
             $entityManager->flush();
             
-            return $this->redirectToRoute('localisation_index');
+            return $this->redirectToRoute('admin_localisation');
         }
         
         return $this->render('localisation/new.html.twig', [
@@ -82,7 +82,7 @@ class AdminLocalisationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             
-            return $this->redirectToRoute('localisation_index', [
+            return $this->redirectToRoute('admin_localisation', [
                 'id' => $localisation->getId(),
             ]);
         }
