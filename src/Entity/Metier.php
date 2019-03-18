@@ -30,13 +30,14 @@ class Metier
     private $typesPrestations;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Partenaire", mappedBy="metiers")
+     * @ORM\OneToMany(targetEntity="App\Entity\Partenaire", mappedBy="metier")
      */
-    private $partenaires;
+    private $partenaires2;
 
     public function __construct()
     {
         $this->typesPrestations = new ArrayCollection();
+        $this->partenaires2 = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -88,18 +89,38 @@ class Metier
         return $this;
     }
 
-    public function getPartenaires(): ?Partenaire
-    {
-        return $this->partenaires;
+    public function __toString(){
+        return $this->getTitre();
     }
 
-    public function setPartenaires(?Partenaire $partenaires): self
+    /**
+     * @return Collection|Partenaire[]
+     */
+    public function getPartenaires2(): Collection
     {
-        $this->partenaires = $partenaires;
+        return $this->partenaires2;
+    }
+
+    public function addPartenaires2(Partenaire $partenaires2): self
+    {
+        if (!$this->partenaires2->contains($partenaires2)) {
+            $this->partenaires2[] = $partenaires2;
+            $partenaires2->setMetier($this);
+        }
 
         return $this;
     }
-    public function __toString(){
-        return $this->getTitre();
+
+    public function removePartenaires2(Partenaire $partenaires2): self
+    {
+        if ($this->partenaires2->contains($partenaires2)) {
+            $this->partenaires2->removeElement($partenaires2);
+            // set the owning side to null (unless already changed)
+            if ($partenaires2->getMetier() === $this) {
+                $partenaires2->setMetier(null);
+            }
+        }
+
+        return $this;
     }
 }

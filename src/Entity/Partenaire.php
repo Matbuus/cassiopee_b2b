@@ -19,11 +19,6 @@ class Partenaire extends Client
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Metier", inversedBy="partenaires")
-     */
-    private $metiers;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Prestation", inversedBy="partenaire", cascade={"persist", "remove"})
      */
     private $prestationProposee;
@@ -32,6 +27,12 @@ class Partenaire extends Client
      * @ORM\OneToMany(targetEntity="App\Entity\TypePrestation", mappedBy="partenaire")
      */
     private $typesPrestationsEnCatalogue;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Metier", inversedBy="partenaires2")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $metier;
 
     public function __construct()
     {
@@ -46,35 +47,13 @@ class Partenaire extends Client
     }
 
     /**
-     * @return Collection|Metier[]
+     * @return Metier
      */
-    public function getMetiers(): Collection
+    public function getMetier(): Collection
     {
         return $this->metiers;
     }
 
-    public function addMetier(Metier $metier): self
-    {
-        if (!$this->metiers->contains($metier)) {
-            $this->metiers[] = $metier;
-            $metier->setPartenaires($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMetier(Metier $metier): self
-    {
-        if ($this->metiers->contains($metier)) {
-            $this->metiers->removeElement($metier);
-            // set the owning side to null (unless already changed)
-            if ($metier->getPartenaires() === $this) {
-                $metier->setPartenaires(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getPrestationProposee(): ?Prestation
     {
@@ -115,6 +94,13 @@ class Partenaire extends Client
                 $typesPrestationsEnCatalogue->setPartenaire(null);
             }
         }
+
+        return $this;
+    }
+
+    public function setMetier(?Metier $metier): self
+    {
+        $this->metier = $metier;
 
         return $this;
     }

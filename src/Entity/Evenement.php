@@ -26,6 +26,12 @@ class Evenement
      */
     private $date;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypeEvenement", inversedBy="evenements")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $typeevenement;
+
     
 
     public function getId(): ?int
@@ -53,6 +59,18 @@ class Evenement
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getTypeevenement(): ?TypeEvenement
+    {
+        return $this->typeevenement;
+    }
+
+    public function setTypeevenement(?TypeEvenement $typeevenement): self
+    {
+        $this->typeevenement = $typeevenement;
 
         return $this;
     }
