@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,9 +39,15 @@ class TypePrestation
     private $metier;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Partenaire", inversedBy="typesPrestationsEnCatalogue")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Partenaire", inversedBy="typePrestations")
      */
-    private $partenaire;
+    private $partenaires;
+
+    public function __construct()
+    {
+        $this->partenaires = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -94,15 +102,30 @@ class TypePrestation
         return $this;
     }
 
-    public function getPartenaire(): ?Partenaire
+    /**
+     * @return Collection|Partenaire[]
+     */
+    public function getPartenaires(): Collection
     {
-        return $this->partenaire;
+        return $this->partenaires;
     }
 
-    public function setPartenaire(?Partenaire $partenaire): self
+    public function addPartenaire(Partenaire $partenaire): self
     {
-        $this->partenaire = $partenaire;
+        if (!$this->partenaires->contains($partenaire)) {
+            $this->partenaires[] = $partenaire;
+        }
 
         return $this;
     }
+
+    public function removePartenaire(Partenaire $partenaire): self
+    {
+        if ($this->partenaires->contains($partenaire)) {
+            $this->partenaires->removeElement($partenaire);
+        }
+
+        return $this;
+    }
+
 }

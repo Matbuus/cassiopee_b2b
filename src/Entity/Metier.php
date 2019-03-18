@@ -23,11 +23,6 @@ class Metier
      */
     private $titre;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PortailB2B", inversedBy="metiers")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $portailB2B;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TypePrestation", mappedBy="metier")
@@ -35,13 +30,14 @@ class Metier
     private $typesPrestations;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Partenaire", inversedBy="metiers")
+     * @ORM\OneToMany(targetEntity="App\Entity\Partenaire", mappedBy="metier")
      */
     private $partenaires;
 
     public function __construct()
     {
         $this->typesPrestations = new ArrayCollection();
+        $this->partenaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -61,17 +57,6 @@ class Metier
         return $this;
     }
 
-    public function getPortailB2B(): ?PortailB2B
-    {
-        return $this->portailB2B;
-    }
-
-    public function setPortailB2B(?PortailB2B $portailB2B): self
-    {
-        $this->portailB2B = $portailB2B;
-
-        return $this;
-    }
 
     /**
      * @return Collection|TypePrestation[]
@@ -104,18 +89,38 @@ class Metier
         return $this;
     }
 
-    public function getPartenaires(): ?Partenaire
+    public function __toString(){
+        return $this->getTitre();
+    }
+
+    /**
+     * @return Collection|Partenaire[]
+     */
+    public function getPartenaires(): Collection
     {
         return $this->partenaires;
     }
 
-    public function setPartenaires(?Partenaire $partenaires): self
+    public function addPartenaire(Partenaire $partenaire): self
     {
-        $this->partenaires = $partenaires;
+        if (!$this->partenaires->contains($partenaire)) {
+            $this->partenaires[] = $partenaire;
+            $partenaire->setMetier($this);
+        }
 
         return $this;
     }
-    public function __toString(){
-        return $this->getTitre();
+
+    public function removePartenaire(Partenaire $partenaire): self
+    {
+        if ($this->partenaires->contains($partenaire)) {
+            $this->partenaires->removeElement($partenaire);
+            // set the owning side to null (unless already changed)
+            if ($partenaire->getMetier() === $this) {
+                $partenaire->setMetier(null);
+            }
+        }
+
+        return $this;
     }
 }
