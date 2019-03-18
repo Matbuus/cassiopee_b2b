@@ -33,6 +33,7 @@ class TypePrestation
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Metier", inversedBy="typesPrestations")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $metier;
 

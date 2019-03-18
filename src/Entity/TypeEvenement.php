@@ -21,12 +21,6 @@ class TypeEvenement
      */
     private $nom;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PortailB2B", inversedBy="typesEvenements")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $portailB2B;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -44,15 +38,4 @@ class TypeEvenement
         return $this;
     }
 
-    public function getPortailB2B(): ?PortailB2B
-    {
-        return $this->portailB2B;
-    }
-
-    public function setPortailB2B(?PortailB2B $portailB2B): self
-    {
-        $this->portailB2B = $portailB2B;
-
-        return $this;
-    }
 }

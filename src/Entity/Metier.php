@@ -23,11 +23,6 @@ class Metier
      */
     private $titre;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PortailB2B", inversedBy="metiers")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $portailB2B;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TypePrestation", mappedBy="metier")
@@ -35,7 +30,7 @@ class Metier
     private $typesPrestations;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Partenaire", inversedBy="metiers")
+     * @ORM\OneToMany(targetEntity="App\Entity\Partenaire", mappedBy="metiers")
      */
     private $partenaires;
 
@@ -61,17 +56,6 @@ class Metier
         return $this;
     }
 
-    public function getPortailB2B(): ?PortailB2B
-    {
-        return $this->portailB2B;
-    }
-
-    public function setPortailB2B(?PortailB2B $portailB2B): self
-    {
-        $this->portailB2B = $portailB2B;
-
-        return $this;
-    }
 
     /**
      * @return Collection|TypePrestation[]

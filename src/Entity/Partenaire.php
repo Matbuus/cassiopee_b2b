@@ -19,13 +19,7 @@ class Partenaire extends Client
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PortailB2B", inversedBy="partenaires")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $portailB2B;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Metier", mappedBy="partenaires")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Metier", inversedBy="partenaires")
      */
     private $metiers;
 
@@ -123,16 +117,6 @@ class Partenaire extends Client
         }
 
         return $this;
-    }
-
-    public function getPortailB2B(): ?PortailB2B
-    {
-        return $this->portailB2B;
-    }
-    
-    public function setPortailB2B(?PortailB2B $portailB2B)
-    {
-        $this->portailB2B = $portailB2B;
     }
 
 }
