@@ -8,7 +8,7 @@
             "ref": "cb4152ebcadbe620ea2261da1a1c5a9b8cea7672"
         },
         "files": [
-            "config/routes/annotations.yaml"
+            "./config/routes/annotations.yaml"
         ]
     },
     "doctrine/cache": {
@@ -35,10 +35,10 @@
             "ref": "453e89b78ded666f351617baca5ae40d20622351"
         },
         "files": [
-            "config/packages/doctrine.yaml",
-            "config/packages/prod/doctrine.yaml",
-            "src/Entity/.gitignore",
-            "src/Repository/.gitignore"
+            "./config/packages/doctrine.yaml",
+            "./config/packages/prod/doctrine.yaml",
+            "./src/Entity/.gitignore",
+            "./src/Repository/.gitignore"
         ]
     },
     "doctrine/doctrine-cache-bundle": {
@@ -53,7 +53,7 @@
             "ref": "fc52d86631a6dfd9fdf3381d0b7e3df2069e51b3"
         },
         "files": [
-            "src/DataFixtures/AppFixtures.php"
+            "./src/DataFixtures/AppFixtures.php"
         ]
     },
     "doctrine/doctrine-migrations-bundle": {
@@ -65,8 +65,8 @@
             "ref": "c1431086fec31f17fbcfe6d6d7e92059458facc1"
         },
         "files": [
-            "config/packages/doctrine_migrations.yaml",
-            "src/Migrations/.gitignore"
+            "./config/packages/doctrine_migrations.yaml",
+            "./src/Migrations/.gitignore"
         ]
     },
     "doctrine/event-manager": {
@@ -102,7 +102,7 @@
             "ref": "70062abc2cd58794d2a90274502f81b55cd9951b"
         },
         "files": [
-            "config/packages/dev/easy_log_handler.yaml"
+            "./config/packages/dev/easy_log_handler.yaml"
         ]
     },
     "egulias/email-validator": {
@@ -159,23 +159,23 @@
             "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
         },
         "files": [
-            "config/packages/sensio_framework_extra.yaml"
+            "./config/packages/sensio_framework_extra.yaml"
         ]
     },
     "swiftmailer/swiftmailer": {
-        "version": "v6.1.3"
+        "version": "v6.2.0"
     },
     "symfony/asset": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/browser-kit": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/cache": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/config": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/console": {
         "version": "3.3",
@@ -186,18 +186,18 @@
             "ref": "0fa049c19069a65f52c1c181d64be3de672c1504"
         },
         "files": [
-            "bin/console",
-            "config/bootstrap.php"
+            "./bin/console",
+            "./config/bootstrap.php"
         ]
     },
     "symfony/contracts": {
         "version": "v1.0.2"
     },
     "symfony/css-selector": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/debug": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/debug-bundle": {
         "version": "4.1",
@@ -208,35 +208,35 @@
             "ref": "f8863cbad2f2e58c4b65fa1eac892ab189971bea"
         },
         "files": [
-            "config/packages/dev/debug.yaml"
+            "./config/packages/dev/debug.yaml"
         ]
     },
     "symfony/debug-pack": {
         "version": "v1.0.7"
     },
     "symfony/dependency-injection": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/doctrine-bridge": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/dom-crawler": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/dotenv": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/event-dispatcher": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/expression-language": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/filesystem": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/finder": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/flex": {
         "version": "1.0",
@@ -247,14 +247,14 @@
             "ref": "dc3fc2e0334a4137c47cfd5a3ececc601fa61a0b"
         },
         "files": [
-            ".env"
+            "./.env"
         ]
     },
     "symfony/force-lowest": {
         "version": "v4.1.0"
     },
     "symfony/form": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/framework-bundle": {
         "version": "4.2",
@@ -265,27 +265,27 @@
             "ref": "9aafbc8edf7558dfe213e9d51d0217cbd78acc5a"
         },
         "files": [
-            "config/bootstrap.php",
-            "config/packages/cache.yaml",
-            "config/packages/framework.yaml",
-            "config/packages/test/framework.yaml",
-            "config/services.yaml",
-            "public/index.php",
-            "src/Controller/.gitignore",
-            "src/Kernel.php"
+            "./config/bootstrap.php",
+            "./config/packages/cache.yaml",
+            "./config/packages/framework.yaml",
+            "./config/packages/test/framework.yaml",
+            "./config/services.yaml",
+            "./public/index.php",
+            "./src/Controller/.gitignore",
+            "./src/Kernel.php"
         ]
     },
     "symfony/http-foundation": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/http-kernel": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/inflector": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/intl": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/lts": {
         "version": "4-dev"
@@ -300,7 +300,7 @@
         }
     },
     "symfony/monolog-bridge": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/monolog-bundle": {
         "version": "3.1",
@@ -311,13 +311,13 @@
             "ref": "18ebf5a940573a20de06f9c4060101eeb438cf3d"
         },
         "files": [
-            "config/packages/dev/monolog.yaml",
-            "config/packages/prod/monolog.yaml",
-            "config/packages/test/monolog.yaml"
+            "./config/packages/dev/monolog.yaml",
+            "./config/packages/prod/monolog.yaml",
+            "./config/packages/test/monolog.yaml"
         ]
     },
     "symfony/options-resolver": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/orm-pack": {
         "version": "v1.0.6"
@@ -331,14 +331,17 @@
             "ref": "0e548dd90adba18fabd4ef419b14d361fe4d6c74"
         },
         "files": [
-            ".env.test",
-            "bin/phpunit",
-            "config/bootstrap.php",
-            "phpunit.xml.dist",
-            "tests/.gitignore"
+            "./.env.test",
+            "./bin/phpunit",
+            "./config/bootstrap.php",
+            "./phpunit.xml.dist",
+            "./tests/.gitignore"
         ]
     },
     "symfony/polyfill-intl-icu": {
+        "version": "v1.10.0"
+    },
+    "symfony/polyfill-intl-idn": {
         "version": "v1.10.0"
     },
     "symfony/polyfill-mbstring": {
@@ -348,16 +351,16 @@
         "version": "v1.10.0"
     },
     "symfony/process": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/profiler-pack": {
         "version": "v1.0.4"
     },
     "symfony/property-access": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/property-info": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/routing": {
         "version": "4.2",
@@ -368,10 +371,10 @@
             "ref": "5374e24d508ba8fd6ba9eb15170255fdb778316a"
         },
         "files": [
-            "config/packages/dev/routing.yaml",
-            "config/packages/routing.yaml",
-            "config/packages/test/routing.yaml",
-            "config/routes.yaml"
+            "./config/packages/dev/routing.yaml",
+            "./config/packages/routing.yaml",
+            "./config/packages/test/routing.yaml",
+            "./config/routes.yaml"
         ]
     },
     "symfony/security-bundle": {
@@ -383,29 +386,29 @@
             "ref": "f8a63faa0d9521526499c0a8f403c9964ecb0527"
         },
         "files": [
-            "config/packages/security.yaml"
+            "./config/packages/security.yaml"
         ]
     },
     "symfony/security-core": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/security-csrf": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/security-guard": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/security-http": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/serializer": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/serializer-pack": {
         "version": "v1.0.2"
     },
     "symfony/stopwatch": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/swiftmailer-bundle": {
         "version": "2.5",
@@ -416,13 +419,13 @@
             "ref": "3db029c03e452b4a23f7fc45cec7c922c2247eb8"
         },
         "files": [
-            "config/packages/dev/swiftmailer.yaml",
-            "config/packages/swiftmailer.yaml",
-            "config/packages/test/swiftmailer.yaml"
+            "./config/packages/dev/swiftmailer.yaml",
+            "./config/packages/swiftmailer.yaml",
+            "./config/packages/test/swiftmailer.yaml"
         ]
     },
     "symfony/twig-bridge": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/twig-bundle": {
         "version": "3.3",
@@ -433,9 +436,9 @@
             "ref": "369b5b29dc52b2c190002825ae7ec24ab6f962dd"
         },
         "files": [
-            "config/packages/twig.yaml",
-            "config/routes/dev/twig.yaml",
-            "templates/base.html.twig"
+            "./config/packages/twig.yaml",
+            "./config/routes/dev/twig.yaml",
+            "./templates/base.html.twig"
         ]
     },
     "symfony/validator": {
@@ -447,17 +450,17 @@
             "ref": "0cdc982334f45d554957a6167e030482795bf9d7"
         },
         "files": [
-            "config/packages/validator.yaml"
+            "./config/packages/validator.yaml"
         ]
     },
     "symfony/var-dumper": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/var-exporter": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/web-link": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "symfony/web-profiler-bundle": {
         "version": "3.3",
@@ -468,9 +471,9 @@
             "ref": "6bdfa1a95f6b2e677ab985cd1af2eae35d62e0f6"
         },
         "files": [
-            "config/packages/dev/web_profiler.yaml",
-            "config/packages/test/web_profiler.yaml",
-            "config/routes/dev/web_profiler.yaml"
+            "./config/packages/dev/web_profiler.yaml",
+            "./config/packages/test/web_profiler.yaml",
+            "./config/routes/dev/web_profiler.yaml"
         ]
     },
     "symfony/web-server-bundle": {
@@ -483,10 +486,10 @@
         }
     },
     "symfony/yaml": {
-        "version": "v4.2.3"
+        "version": "v4.2.4"
     },
     "twig/twig": {
-        "version": "v2.6.2"
+        "version": "v2.7.2"
     },
     "webmozart/assert": {
         "version": "1.4.0"

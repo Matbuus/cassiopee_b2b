@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,28 @@ class Evenement
      * @ORM\JoinColumn(nullable=false)
      */
     private $client;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Localisation", inversedBy="evenements")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $localisation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypeEvenement", inversedBy="evenements")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $typeEvenement;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Prestation", mappedBy="evenement")
+     */
+    private $prestations;
+
+    public function __construct()
+    {
+        $this->prestations = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -70,6 +94,61 @@ class Evenement
     public function setClient(?Client $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getLocalisation(): ?Localisation
+    {
+        return $this->localisation;
+    }
+
+    public function setLocalisation(?Localisation $localisation): self
+    {
+        $this->localisation = $localisation;
+
+        return $this;
+    }
+
+    public function getTypeEvenement(): ?TypeEvenement
+    {
+        return $this->typeEvenement;
+    }
+
+    public function setTypeEvenement(?TypeEvenement $typeEvenement): self
+    {
+        $this->typeEvenement = $typeEvenement;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Prestation[]
+     */
+    public function getPrestations(): Collection
+    {
+        return $this->prestations;
+    }
+
+    public function addPrestation(Prestation $prestation): self
+    {
+        if (!$this->prestations->contains($prestation)) {
+            $this->prestations[] = $prestation;
+            $prestation->setEvenement($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrestation(Prestation $prestation): self
+    {
+        if ($this->prestations->contains($prestation)) {
+            $this->prestations->removeElement($prestation);
+            // set the owning side to null (unless already changed)
+            if ($prestation->getEvenement() === $this) {
+                $prestation->setEvenement(null);
+            }
+        }
 
         return $this;
     }
