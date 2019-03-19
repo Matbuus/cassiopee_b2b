@@ -31,6 +31,12 @@ class Prestation
      */
     private $partenaire;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Evenement", inversedBy="prestations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $evenement;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +80,18 @@ class Prestation
         if ($newPrestationProposee !== $partenaire->getPrestationProposee()) {
             $partenaire->setPrestationProposee($newPrestationProposee);
         }
+
+        return $this;
+    }
+
+    public function getEvenement(): ?Evenement
+    {
+        return $this->evenement;
+    }
+
+    public function setEvenement(?Evenement $evenement): self
+    {
+        $this->evenement = $evenement;
 
         return $this;
     }
