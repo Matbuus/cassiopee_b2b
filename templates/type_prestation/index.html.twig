@@ -12,6 +12,7 @@
                 <th>NomType</th>
                 <th>Description</th>
                 <th>TarifPublic</th>
+             <!--    <th>Type Event</th>  -->
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,6 +23,7 @@
                 <td>{{ type_prestation.nomType }}</td>
                 <td>{{ type_prestation.description }}</td>
                 <td>{{ type_prestation.tarifPublic }}</td>
+              <!--   <td>{{ type_prestation.typeEvent.nom }}</td> -->
                 <td>
                     <a href="{{ path('admin_type_prestation_show', {'id': type_prestation.id}) }}">show</a>
                     <a href="{{ path('admin_type_prestation_edit', {'id': type_prestation.id}) }}">edit</a>

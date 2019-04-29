@@ -3,9 +3,9 @@
 {% block title %}New Evenement{% endblock %}
 
 {% block body %}
-    <h1>Create new Evenement</h1>
+    <h1>Create new Evenement for the client {{ idClient }}</h1>
 
     {{ include('evenement/_form.html.twig') }}
 
-    <a href="{{ path('evenement_index') }}">back to list</a>
+    <a href="{{ path('client_evenement_index', {'id' : idClient}) }}">back to list</a>
 {% endblock %}

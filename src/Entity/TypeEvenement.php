@@ -28,9 +28,17 @@ class TypeEvenement
      */
     private $evenements;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TypePrestation", mappedBy="typeEvent")
+     */
+    private $typePrestations;
+
+
+
     public function __construct()
     {
         $this->evenements = new ArrayCollection();
+        $this->typePrestations = new ArrayCollection();
     }
 
 
@@ -86,5 +94,38 @@ class TypeEvenement
     {
         return $this->getNom();
     }
+
+    /**
+     * @return Collection|TypePrestation[]
+     */
+    public function getTypePrestations(): Collection
+    {
+        return $this->typePrestations;
+    }
+
+    public function addTypePrestation(TypePrestation $typePrestation): self
+    {
+        if (!$this->typePrestations->contains($typePrestation)) {
+            $this->typePrestations[] = $typePrestation;
+            $typePrestation->setTypeEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTypePrestation(TypePrestation $typePrestation): self
+    {
+        if ($this->typePrestations->contains($typePrestation)) {
+            $this->typePrestations->removeElement($typePrestation);
+            // set the owning side to null (unless already changed)
+            if ($typePrestation->getTypeEvent() === $this) {
+                $typePrestation->setTypeEvent(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 
 }

@@ -12,21 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Partenaire extends Client
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Prestation", inversedBy="partenaire", cascade={"persist", "remove"})
-     */
-    private $prestationProposee;
-
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Metier", inversedBy="partenaires")
      */
     private $metier;
@@ -36,20 +21,22 @@ class Partenaire extends Client
      */
     private $typePrestations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Prestation", mappedBy="partenaire", orphanRemoval=true)
+     */
+    private $prestationsProposees;
+
     public function __construct()
     {
         $this->metiers = new ArrayCollection();
         $this->typesPrestationsEnCatalogue = new ArrayCollection();
         $this->typesPrestation = new ArrayCollection();
         $this->typePrestations = new ArrayCollection();
+        $this->prestationsProposees = new ArrayCollection();
     }
 
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
+  
     /**
      * @return Collection|Metier[]
      */
@@ -58,18 +45,6 @@ class Partenaire extends Client
         return $this->metiers;
     }
 
-
-    public function getPrestationProposee(): ?Prestation
-    {
-        return $this->prestationProposee;
-    }
-
-    public function setPrestationProposee(?Prestation $prestationProposee): self
-    {
-        $this->prestationProposee = $prestationProposee;
-
-        return $this;
-    }
 
 
     public function getMetier(): ?Metier
@@ -108,6 +83,37 @@ class Partenaire extends Client
         if ($this->typePrestations->contains($typePrestation)) {
             $this->typePrestations->removeElement($typePrestation);
             $typePrestation->removePartenaire($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Prestation[]
+     */
+    public function getPrestationsProposees(): Collection
+    {
+        return $this->prestationsProposees;
+    }
+
+    public function addPrestationsProposee(Prestation $prestationsProposee): self
+    {
+        if (!$this->prestationsProposees->contains($prestationsProposee)) {
+            $this->prestationsProposees[] = $prestationsProposee;
+            $prestationsProposee->setPartenaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrestationsProposee(Prestation $prestationsProposee): self
+    {
+        if ($this->prestationsProposees->contains($prestationsProposee)) {
+            $this->prestationsProposees->removeElement($prestationsProposee);
+            // set the owning side to null (unless already changed)
+            if ($prestationsProposee->getPartenaire() === $this) {
+                $prestationsProposee->setPartenaire(null);
+            }
         }
 
         return $this;

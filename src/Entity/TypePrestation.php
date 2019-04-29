@@ -43,6 +43,11 @@ class TypePrestation
      */
     private $partenaires;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypeEvenement", inversedBy="typePrestations")
+     */
+    private $typeEvent;
+
     public function __construct()
     {
         $this->partenaires = new ArrayCollection();
@@ -127,5 +132,23 @@ class TypePrestation
 
         return $this;
     }
+
+    public function getTypeEvent(): ?TypeEvenement
+    {
+        return $this->typeEvent;
+    }
+
+    public function setTypeEvent(?TypeEvenement $typeEvent): self
+    {
+        $this->typeEvent = $typeEvent;
+
+        return $this;
+    }
+
+    public function __toString(): string{
+        return $this->nomType;
+    }
+
+
 
 }

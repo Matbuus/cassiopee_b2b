@@ -42,8 +42,9 @@ class ClientEvenementController extends AbstractController
      */
     public function index(EvenementRepository $evenementRepository, ClientRepository $clientRepository, Client $client): Response
     {
-        dump($client);
+
         return $this->render('evenement/index.html.twig', [
+            'idClient' => $client->getId(),
             'evenements' => $evenementRepository->findBy(['client'=>$client]),
         ]);
     }
@@ -70,6 +71,7 @@ class ClientEvenementController extends AbstractController
         }
 
         return $this->render('evenement/new.html.twig', [
+            'idClient' => $client->getId(),
             'evenement' => $evenement,
             'form' => $form->createView(),
         ]);
@@ -84,29 +86,35 @@ class ClientEvenementController extends AbstractController
         dump($client);
         return $this->render('evenement/show.html.twig', [
             'evenement' => $evenement,
+            'idClient' => $client->getId(),
         ]);
     }
 
     /**
-     * @Route("/event/{id}/edit", name="client_evenement_edit", methods={"GET","POST"})
+     * @Route("/{id}/event/{id_event}/edit", name="client_evenement_edit", methods={"GET","POST"})
+     * @Entity("evenement",expr="repository.find(id_event)")
      */
-    public function edit(Request $request, Evenement $evenement): Response
+    public function edit(Request $request, Client $client, Evenement $evenement): Response
     {
+        dump($client);
+        dump($evenement);
         $form = $this->createForm(EvenementType::class, $evenement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('evenement_index', [
-                'id' => $evenement->getId(),
+            return $this->redirectToRoute('client_evenement_index', [
+                'id' => $client->getId(),
             ]);
         }
 
         return $this->render('evenement/edit.html.twig', [
+            'idClient' => $client->getId(),
             'evenement' => $evenement,
             'form' => $form->createView(),
         ]);
+        
     }
 
     /**

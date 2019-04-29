@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Partenaire
+{% endblock %}
+
+{% block body %}
+<h1>Partenaire</h1>
+
+<table class="table">
+	<tbody>
+		<tr>
+			<th>Id</th>
+			<td>{{ partenaire.id }}</td>
+		</tr>
+		<tr>
+			<th>Nom</th>
+			<td>{{ partenaire.nom }}</td>
+		</tr>
+		<tr>
+			<th>Prenom</th>
+			<td>{{ partenaire.prenom }}</td>
+		</tr>
+		<tr>
+			<th>Metier</th>
+			<td>{{ partenaire.metier.titre }}</td>
+		</tr>
+	</tbody>
+</table>
+
+<a href="{{ path('partenaire_index') }}">back to list</a>
+
+<a href="{{ path('partenaire_edit', {'id': partenaire.id}) }}">edit</a>
+{{ include('partenaire/_delete_form.html.twig') }}
+
+<br>
+<h1>
+	Types de prestation pour le partenaire
+	{{ partenaire.nom }}
+</h1>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Nom Type</th>
+			<th>Description</th>
+			<th>Tarif Public</th>
+			<th>action</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for type_prestation in typePrestations %}
+		<tr>
+			<td>{{ type_prestation.nomType }}</td>
+			<td>{{ type_prestation.description }}</td>
+			<td>{{ type_prestation.tarifPublic }}</td>
+			<td>{{ include('type_prestation/_delete_form.html.twig') }}</td>
+		</tr>
+		{% else %}
+		<tr>
+			<td colspan="3">no records found</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<a
+	href="{{ path('partenaire_type_prestation_add', {'id': partenaire.id}) }}">nouveau
+	type de prestation</a>
+
+
+{% endblock %}

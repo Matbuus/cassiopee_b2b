@@ -26,16 +26,18 @@ class Prestation
      */
     private $dateFin;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Partenaire", mappedBy="prestationProposee", cascade={"persist", "remove"})
-     */
-    private $partenaire;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Evenement", inversedBy="prestations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $evenement;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Partenaire", inversedBy="prestationsProposees")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $partenaire;
 
     public function getId(): ?int
     {
@@ -66,23 +68,7 @@ class Prestation
         return $this;
     }
 
-    public function getPartenaire(): ?Partenaire
-    {
-        return $this->partenaire;
-    }
 
-    public function setPartenaire(?Partenaire $partenaire): self
-    {
-        $this->partenaire = $partenaire;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newPrestationProposee = $partenaire === null ? null : $this;
-        if ($newPrestationProposee !== $partenaire->getPrestationProposee()) {
-            $partenaire->setPrestationProposee($newPrestationProposee);
-        }
-
-        return $this;
-    }
 
     public function getEvenement(): ?Evenement
     {
@@ -92,6 +78,18 @@ class Prestation
     public function setEvenement(?Evenement $evenement): self
     {
         $this->evenement = $evenement;
+
+        return $this;
+    }
+
+    public function getPartenaire(): ?Partenaire
+    {
+        return $this->partenaire;
+    }
+
+    public function setPartenaire(?Partenaire $partenaire): self
+    {
+        $this->partenaire = $partenaire;
 
         return $this;
     }

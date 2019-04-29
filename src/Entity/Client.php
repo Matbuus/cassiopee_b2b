@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  * @ORM\MappedSuperclass()
+ * @ORM\InheritanceType("SINGLE_TABLE")
  */
 class Client
 {
@@ -17,7 +18,7 @@ class Client
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
@@ -32,7 +33,7 @@ class Client
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Evenement", mappedBy="client")
      */
-    private $evenements;
+    protected $evenements;
 
     public function __construct()
     {
