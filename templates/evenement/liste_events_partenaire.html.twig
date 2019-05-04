@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Evenements du client {{ idClient }}{% endblock %}
+{% block title %}Evenements disponibles{% endblock %}
 
 {% block body %}
-    <h1>Evenement du client {{ idClient }}</h1>
+    <h1>Evenements disponibles</h1>
 
     <table class="table">
         <thead>
@@ -12,7 +12,6 @@
                 <th>Titre</th>
                 <th>Date</th>
                 <th>Type d'evenement</th>
-                <th>Etat evenement</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,11 +22,7 @@
                 <td>{{ evenement.titre }}</td>
                 <td>{{ evenement.date ? evenement.date|date('Y-m-d') : '' }}</td>
                 <td> {{ evenement.typeEvenement.nom }} </td>
-                <td> {{ evenement.etatEvenement.titre }} </td>
-                <td>
-                    <a href="{{ path('client_evenement_show', {'id': idClient, 'id_event': evenement.id }) }}">show</a>
-                    <a href="{{ path('client_evenement_edit', {'id': idClient, 'id_event': evenement.id}) }}">edit</a>
-                </td>
+                <td> <a href="{{ path('partenaire_proposer_prestation', {'id': id , 'id_event': evenement.id}) }}" class="btn btn-success"> Proposer prestation </a> </td>
             </tr>
         {% else %}
             <tr>
@@ -36,5 +31,5 @@
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ path('client_evenement_new', {'id': idClient}) }}">Create new</a>
+    <a href="{{ path('partenaire_show', {'id': id}) }}">Back to profile</a>
 {% endblock %}

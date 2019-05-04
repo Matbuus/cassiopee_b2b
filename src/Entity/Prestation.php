@@ -39,6 +39,17 @@ class Prestation
      */
     private $partenaire;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etat")
+     */
+    private $etatPrestation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypePrestation", inversedBy="prestations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $typePrestation;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +101,30 @@ class Prestation
     public function setPartenaire(?Partenaire $partenaire): self
     {
         $this->partenaire = $partenaire;
+
+        return $this;
+    }
+
+    public function getEtatPrestation(): ?Etat
+    {
+        return $this->etatPrestation;
+    }
+
+    public function setEtatPrestation(?Etat $etatPrestation): self
+    {
+        $this->etatPrestation = $etatPrestation;
+
+        return $this;
+    }
+
+    public function getTypePrestation(): ?TypePrestation
+    {
+        return $this->typePrestation;
+    }
+
+    public function setTypePrestation(?TypePrestation $typePrestation): self
+    {
+        $this->typePrestation = $typePrestation;
 
         return $this;
     }

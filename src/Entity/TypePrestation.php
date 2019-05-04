@@ -48,9 +48,15 @@ class TypePrestation
      */
     private $typeEvent;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Prestation", mappedBy="typePrestation", orphanRemoval=true)
+     */
+    private $prestations;
+
     public function __construct()
     {
         $this->partenaires = new ArrayCollection();
+        $this->prestations = new ArrayCollection();
     }
 
 
@@ -147,6 +153,37 @@ class TypePrestation
 
     public function __toString(): string{
         return $this->nomType;
+    }
+
+    /**
+     * @return Collection|Prestation[]
+     */
+    public function getPrestations(): Collection
+    {
+        return $this->prestations;
+    }
+
+    public function addPrestation(Prestation $prestation): self
+    {
+        if (!$this->prestations->contains($prestation)) {
+            $this->prestations[] = $prestation;
+            $prestation->setTypePrestation($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrestation(Prestation $prestation): self
+    {
+        if ($this->prestations->contains($prestation)) {
+            $this->prestations->removeElement($prestation);
+            // set the owning side to null (unless already changed)
+            if ($prestation->getTypePrestation() === $this) {
+                $prestation->setTypePrestation(null);
+            }
+        }
+
+        return $this;
     }
 
 

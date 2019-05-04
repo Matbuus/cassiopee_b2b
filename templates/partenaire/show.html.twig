@@ -65,6 +65,8 @@ Partenaire
 <a
 	href="{{ path('partenaire_type_prestation_add', {'id': partenaire.id}) }}">nouveau
 	type de prestation</a>
+	
+	<a href="{{ path('evenement_index_partenaire' , {'id': partenaire.id}) }}"> Consulter les evenements disponibles </a>
 
 
 {% endblock %}

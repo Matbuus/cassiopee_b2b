@@ -51,6 +51,11 @@ class Evenement
      */
     private $prestations;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etat")
+     */
+    private $etatEvenement;
+
     public function __construct()
     {
         $this->prestations = new ArrayCollection();
@@ -151,5 +156,22 @@ class Evenement
         }
 
         return $this;
+    }
+
+    public function getEtatEvenement(): ?Etat
+    {
+        return $this->etatEvenement;
+    }
+
+    public function setEtatEvenement(?Etat $etatEvenement): self
+    {
+        $this->etatEvenement = $etatEvenement;
+
+        return $this;
+    }
+    
+    public function __toString(): string 
+    {
+        return $this->getTitre();
     }
 }

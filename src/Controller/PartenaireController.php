@@ -1,7 +1,11 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Evenement;
+use App\Entity\Prestation;
 use App\Entity\Partenaire;
+use App\Form\EvenementType;
+use App\Form\PrestationType;
 use App\Form\PartenaireType;
 use App\Form\TypePrestation1Type;
 use App\Form\TypePrestation2Type;
@@ -10,7 +14,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use App\Entity\TypePrestation;
+use App\Entity\Etat;
 
 /**
  *
@@ -62,7 +68,6 @@ class PartenaireController extends AbstractController
      */
     public function show(Partenaire $partenaire): Response
     {
-        dump($partenaire->getTypePrestations()->get(0)->getTypeEvent());
         return $this->render('partenaire/show.html.twig', [
             'partenaire' => $partenaire,
             'typePrestations' => $partenaire->getTypePrestations()
@@ -143,4 +148,57 @@ class PartenaireController extends AbstractController
             'form' => $form->createView(),
         ]);    
     }
+    /**
+     * @Route("/{id}/events", name="evenement_index_partenaire", methods={"GET"})
+     */
+    public function eventsForPartenaire(Partenaire $partenaire)
+    {
+        $typesPrestations = $partenaire->getTypePrestations();
+        $events = array();
+        foreach ($typesPrestations as $typePrestation){
+            $typeEvent = $typePrestation->getTypeEvent();
+            $to_add = $this->getDoctrine()->getManager()->getRepository(Evenement::class)->findBy(['typeEvenement' => $typeEvent]) ;
+            foreach($to_add as $event)
+                if(!in_array($event, $events))
+                    $events[] = $event;
+        }
+        dump($events);
+        return $this->render('evenement/liste_events_partenaire.html.twig', [
+            'id' => $partenaire->getId(),
+            'evenements' => $events,
+        ]);
+    }
+    
+    /**
+     * @Route("/{id}/event/{id_event}/prestation", name="partenaire_proposer_prestation", methods={"GET","POST"})
+     * @Entity("evenement",expr="repository.find(id_event)")
+     */
+    public function proposerPrestation(Request $request, Partenaire $partenaire, Evenement $evenement): Response
+    {
+        $prestation = new Prestation();
+        $form = $this->createForm(PrestationType::class, $prestation);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $prestation->setPartenaire($partenaire);
+            $prestation->setEvenement($evenement);
+            $etat = $entityManager->getRepository(Etat::class)->find(3);
+            $prestation->setEtatPrestation($etat);
+            $entityManager->persist($partenaire);
+            $entityManager->persist($evenement);
+            $entityManager->persist($etat);
+            $entityManager->persist($prestation);
+            $entityManager->flush();
+            
+            return $this->redirectToRoute('prestation_index');
+        }
+        
+        return $this->render('prestation/new.html.twig', [
+            'prestation' => $prestation,
+            'form' => $form->createView(),
+        ]);
+    }
+    
+    
 }

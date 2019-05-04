@@ -96,18 +96,5 @@ class EvenementController extends AbstractController
 
         return $this->redirectToRoute('evenement_index');
     }
-    
-    /**
-     * @Route("/test/{id}", name="evenement_index", methods={"GET"})
-     */
-    public function eventsForPartenaire(Partenaire $partenaire)
-    {
-        $typesPrestations = $partenaire->getTypePrestations();
-    
-        $typeEvents = array(); 
-        foreach ($typesPrestations as $typePrestation){
-            dump($typePrestation->getTypeEvent());
-        }
-
-    }
+   
 }
