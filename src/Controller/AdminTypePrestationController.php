@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\TypeEvenement;
 use App\Form\TypeEvenementType;
+use App\Form\TypePrestation1Type;
 use App\Form\TypePrestation2Type;
 use App\Repository\MetierRepository;
 use App\Repository\TypeEvenementRepository;
@@ -48,15 +49,17 @@ class AdminTypePrestationController extends AbstractController
     public function addTypePrestation(Request $request, Metier $metier): Response
     {
         $typePrestation = new TypePrestation();
-        $form = $this->createForm(TypePrestation2Type::class, $typePrestation);
+        $form = $this->createForm(TypePrestation1Type::class, $typePrestation);
         $form->handleRequest($request);
         dump($metier);
         if ($form->isSubmitted() && $form->isValid()) {
             $typePrestation->setMetier($metier);
+            $typePrestation->getTypeEvent()->addTypePrestation($typePrestation);
             $metier->addTypesPrestation($typePrestation);
             $em = $this->getDoctrine()->getManager();
             $em->persist($typePrestation);
             $em->persist($metier);
+            $em->persist( $typePrestation->getTypeEvent());
             $em->flush();
             
             $this->get('session')->getFlashBag()->add('message', 'type de prestation bien ajoutée au métier');

@@ -66,6 +66,7 @@ class AdminTypeEvenementController extends AbstractController
      */
     public function showTypeEvenement(TypeEvenement $typeEvenement): Response
     {
+        dump($typeEvenement);
         return $this->render('type_evenement/show.html.twig', [
             'type_evenement' => $typeEvenement,
         ]);

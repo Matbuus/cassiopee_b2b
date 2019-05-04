@@ -62,6 +62,7 @@ class PartenaireController extends AbstractController
      */
     public function show(Partenaire $partenaire): Response
     {
+        dump($partenaire->getTypePrestations()->get(0)->getTypeEvent());
         return $this->render('partenaire/show.html.twig', [
             'partenaire' => $partenaire,
             'typePrestations' => $partenaire->getTypePrestations()

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Evenement;
+use App\Entity\Partenaire;
 use App\Form\Evenement1Type;
 use App\Repository\EvenementRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation;
+use App\Entity\TypeEvenement;
 
 /**
  * @Route("/evenement")
@@ -93,5 +95,19 @@ class EvenementController extends AbstractController
         }
 
         return $this->redirectToRoute('evenement_index');
+    }
+    
+    /**
+     * @Route("/test/{id}", name="evenement_index", methods={"GET"})
+     */
+    public function eventsForPartenaire(Partenaire $partenaire)
+    {
+        $typesPrestations = $partenaire->getTypePrestations();
+    
+        $typeEvents = array(); 
+        foreach ($typesPrestations as $typePrestation){
+            dump($typePrestation->getTypeEvent());
+        }
+
     }
 }
