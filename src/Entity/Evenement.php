@@ -50,6 +50,7 @@ class Evenement
      * @ORM\OneToMany(targetEntity="App\Entity\Prestation", mappedBy="evenement")
      */
     private $prestations;
+    
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etat")

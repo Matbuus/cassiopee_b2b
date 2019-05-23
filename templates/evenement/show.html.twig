@@ -23,9 +23,9 @@
     </table>
 
     <a href="{{ path('client_evenement_index', {'id': idClient}) }}">back to list</a>
-
     <a href="{{ path('client_evenement_edit', {'id': idClient, 'id_event': evenement.id}) }}">edit</a>
- {{ dump(idClient) }}
- {{ dump(evenement.id) }}
-    {{ include('evenement/_delete_form.html.twig') }}
+    <a href="{{ path('client_evenement_prestations', {'id': idClient, 'id_event': evenement.id}) }}">Liste des prestations</a>
+     {{ dump(idClient) }}
+     {{ dump(evenement.id) }}
+     {{ include('evenement/_delete_form.html.twig') }}
 {% endblock %}

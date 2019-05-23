@@ -1,2 +1,5 @@
 /vendor/
 /var/
+.env
+.env.test
+.project
