@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prestation{% endblock %}
+
+{% block body %}
+    <h1>Prestation {{ prestation.typePrestation.nomType }} pour l'evenement {{ evenement.titre }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ prestation.id }}</td>
+            </tr>
+            <tr>
+                <th>DateDebut</th>
+                <td>{{ prestation.dateDebut ? prestation.dateDebut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateFin</th>
+                <td>{{ prestation.dateFin ? prestation.dateFin|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Proposee par</th>
+                <td>{{ prestation.partenaire.nom }} {{ prestation.partenaire.prenom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('client_evenement_prestations', {'id': idClient, 'id_event': evenement.id  }) }}">retour a la liste des prestations</a>
+{% endblock %}

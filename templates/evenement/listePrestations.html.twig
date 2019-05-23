@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evenement{% endblock %}
+
+{% block body %}
+ <h1>Liste des prestations pour l'evenemt {{ evenement.titre  }}</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Date debut</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for prestation in listePrestations %}
+            <tr>
+                <td>{{ prestation.id }}</td>
+                <td>{{ prestation.typePrestation.nomType }}</td>
+                <td>{{ prestation.typePrestation.tarifPublic }}</td>
+                <td>{{ prestation.dateDebut ? prestation.dateDebut|date('Y-m-d') : ''  }}</td>
+                <td>
+                    <a href="{{ path('event_description_prestation', {'id': idClient, 'id_event': evenement.id,'id_prest': prestation.id }) }}">Description</a>
+                    <a href="{{ path('client_evenement_edit', {'id': idClient, 'id_event': evenement.id}) }}">Confirmer</a>
+                    <a href="{{ path('client_evenement_show', {'id': idClient, 'id_event': evenement.id }) }}">refuser</a>
+                </td>
+           	</tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('client_evenement_index', {'id': idClient}) }}">Retour a la liste des events</a>
+    <a href="{{ path('client_evenement_edit', {'id': idClient, 'id_event': evenement.id}) }}">Description generale de l'event</a>
+    
+{% endblock %}

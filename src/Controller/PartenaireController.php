@@ -137,7 +137,7 @@ class PartenaireController extends AbstractController
             
             $this->get('session')
                 ->getFlashBag()
-                ->add('message', 'type de prestation bien ajoutÃ©e au mÃ©tier');
+                ->add('message', 'type de prestation bien ajouté au métier');
             
             $response = $this->forward('App\Controller\PartenaireController::show', [
                 'id' => $partenaire->getId()

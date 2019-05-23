@@ -26,6 +26,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use App\Entity\Client;
 use App\Repository\ClientRepository;
+use App\Entity\Prestation;
 
 
 
@@ -82,7 +83,8 @@ class ClientEvenementController extends AbstractController
      * @Entity("evenement",expr="repository.find(id_event)")
      */
     public function show(Client $client, Evenement $evenement): Response
-    { 
+    {   
+        
         dump($client);
         return $this->render('evenement/show.html.twig', [
             'evenement' => $evenement,
@@ -116,7 +118,8 @@ class ClientEvenementController extends AbstractController
         ]);
         
     }
-
+    
+   
     /**
      * @Route("/{id}", name="client_evenement_delete", methods={"DELETE"})
      */
@@ -131,5 +134,36 @@ class ClientEvenementController extends AbstractController
         return $this->redirectToRoute('evenement_index');
     }
     
+    
+    /**
+     * @Route("/{id}/event/{id_event}/liste", name="client_evenement_prestations", methods={"GET"})
+     * @Entity("evenement",expr="repository.find(id_event)")
+     */
+    public function afficherListePrestations(Client $client, Evenement $evenement): Response
+    {
+        
+        dump($client);
+        $listePrestations = $evenement->getPrestations();
+        return $this->render('evenement/listePrestations.html.twig', [
+            'evenement' => $evenement,
+            'idClient' => $client->getId(),
+            'listePrestations' => $listePrestations,
+        ]);
+    }
+    
+    /**
+     * @Route("/{id}/event/{id_event}/prestation/{id_prest}", name="event_description_prestation", methods={"GET"})
+     * @Entity("evenement",expr="repository.find(id_event)")
+     * @Entity("prestation",expr="repository.find(id_prest)")
+     */
+    public function afficherDescription(Client $client, Evenement $evenement, Prestation $prestation): Response
+    {
+        
+        return $this->render('prestation/show_prestation_client.html.twig', [
+            'evenement' => $evenement,
+            'idClient' => $client->getId(),
+            'prestation' => $prestation,
+        ]);
+    }
     
 }
