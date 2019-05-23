@@ -53,7 +53,7 @@ Partenaire
 			<td>{{ type_prestation.nomType }}</td>
 			<td>{{ type_prestation.description }}</td>
 			<td>{{ type_prestation.tarifPublic }}</td>
-			<td>{{ include('type_prestation/_delete_form.html.twig') }}</td>
+			<td>{{ include('type_prestation/_delete_form_partenaire.html.twig' ,{ 'id' : partenaire.id}) }}</td>
 		</tr>
 		{% else %}
 		<tr>

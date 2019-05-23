@@ -48,8 +48,11 @@ class PartenaireController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            foreach ($partenaire->getMetier()->getTypesPrestations() as $typePrestation)
+            foreach ($partenaire->getMetier()->getTypesPrestations() as $typePrestation){
                 $partenaire->addTypePrestation($typePrestation);
+                $typePrestation->addPartenaire($partenaire);
+                $entityManager->persist($typePrestation);
+            }
             $entityManager->persist($partenaire);
             $entityManager->flush();
             
@@ -183,11 +186,11 @@ class PartenaireController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $prestation->setPartenaire($partenaire);
             $prestation->setEvenement($evenement);
-            $etat = $entityManager->getRepository(Etat::class)->find(3);
-            $prestation->setEtatPrestation($etat);
+            //$etat = $entityManager->getRepository(Etat::class)->find(3);
+            //$prestation->setEtatPrestation($etat);
             $entityManager->persist($partenaire);
             $entityManager->persist($evenement);
-            $entityManager->persist($etat);
+            //$entityManager->persist($etat);
             $entityManager->persist($prestation);
             $entityManager->flush();
             
@@ -200,5 +203,26 @@ class PartenaireController extends AbstractController
         ]);
     }
     
+    /**
+     * @Route("{id}/type_prestation/{id_tp}", name="partenaire_type_prestation_delete", methods={"DELETE"})
+     * @Entity("typePrestation",expr="repository.find(id_tp)")
+     */
+    public function deleteTypePrestation(Request $request, Partenaire $partenaire, TypePrestation $typePrestation): Response
+    {
+            dump($partenaire);
+            dump($typePrestation);
+        if ($this->isCsrfTokenValid('delete'.$typePrestation->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+           // $entityManager->remove($typePrestation);
+            $partenaire->removeTypePrestation($typePrestation);
+            $entityManager->persist($partenaire);
+            //$entityManager->persist($object)
+            $entityManager->flush();
+        }
+        
+        $response = $this->forward('App\Controller\PartenaireController::show', ['id' =>$partenaire->getId(),]);
+        
+        return $response;
+    }
     
 }
