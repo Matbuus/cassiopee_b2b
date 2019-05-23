@@ -12,6 +12,7 @@
                 <th>Nom</th>
                 <th>Prix</th>
                 <th>Date debut</th>
+                <th>Etat prestation </th>
                 
             </tr>
         </thead>
@@ -22,6 +23,7 @@
                 <td>{{ prestation.typePrestation.nomType }}</td>
                 <td>{{ prestation.typePrestation.tarifPublic }}</td>
                 <td>{{ prestation.dateDebut ? prestation.dateDebut|date('Y-m-d') : ''  }}</td>
+               	<td> {{ prestation.etatPrestation.titre }} </td>
                 <td>
                     <a href="{{ path('event_description_prestation', {'id': idClient, 'id_event': evenement.id,'id_prest': prestation.id }) }}">Description</a>
                     <a href="{{ path('client_evenement_edit', {'id': idClient, 'id_event': evenement.id}) }}">Confirmer</a>
