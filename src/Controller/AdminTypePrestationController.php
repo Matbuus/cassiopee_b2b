@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Partenaire;
 use App\Entity\TypeEvenement;
 use App\Form\TypeEvenementType;
 use App\Form\TypePrestation1Type;
@@ -21,6 +22,7 @@ use App\Form\TypePrestationType;
 use App\Repository\TypePrestationRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use App\Repository\PartenaireRepository;
 
 
 
@@ -57,6 +59,13 @@ class AdminTypePrestationController extends AbstractController
             $typePrestation->getTypeEvent()->addTypePrestation($typePrestation);
             $metier->addTypesPrestation($typePrestation);
             $em = $this->getDoctrine()->getManager();
+            $partenaires = $em->getRepository(Partenaire::class)->findBy(["metier" => $metier]);
+            foreach($partenaires as $partenaire){
+                $partenaire->addTypePrestation($typePrestation);
+                $em->persist($partenaire);
+                $typePrestation->addPartenaire($partenaire);
+            }
+            
             $em->persist($typePrestation);
             $em->persist($metier);
             $em->persist( $typePrestation->getTypeEvent());

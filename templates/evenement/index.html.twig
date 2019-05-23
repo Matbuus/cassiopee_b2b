@@ -12,7 +12,6 @@
                 <th>Titre</th>
                 <th>Date</th>
                 <th>Type d'evenement</th>
-                <th>Etat evenement</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,7 +22,6 @@
                 <td>{{ evenement.titre }}</td>
                 <td>{{ evenement.date ? evenement.date|date('Y-m-d') : '' }}</td>
                 <td> {{ evenement.typeEvenement.nom }} </td>
-                <td> {{ evenement.etatEvenement.titre }} </td>
                 <td>
                     <a href="{{ path('client_evenement_show', {'id': idClient, 'id_event': evenement.id }) }}">show</a>
                     <a href="{{ path('client_evenement_edit', {'id': idClient, 'id_event': evenement.id}) }}">edit</a>

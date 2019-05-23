@@ -15,7 +15,7 @@ class PartenaireType extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('metier')
-            ->add('typePrestations')
+            //->add('typePrestations')
         ;
     }
 
