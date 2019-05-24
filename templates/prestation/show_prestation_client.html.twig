@@ -23,8 +23,22 @@
                 <th>Proposee par</th>
                 <td>{{ prestation.partenaire.nom }} {{ prestation.partenaire.prenom }}</td>
             </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ prestation.etatPrestation }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ prestation.TypePrestation.description }}</td>
+            </tr>
         </tbody>
     </table>
 
     <a href="{{ path('client_evenement_prestations', {'id': idClient, 'id_event': evenement.id  }) }}">retour a la liste des prestations</a>
+    {% if prestation.etatPrestation == "Proposee" %}
+  	    <a href="{{ path('changer_etat_prestation', {'id': idClient, 'id_event': evenement.id, 'id_prest': prestation.id,'action':"confirmer"}) }}">Confirmer</a>
+    	<a href="{{ path('changer_etat_prestation', {'id': idClient, 'id_event': evenement.id, 'id_prest': prestation.id, 'action':"refuser"}) }}">refuser</a>
+	{% endif %}
+ 
 {% endblock %}
+

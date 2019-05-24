@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Entity\Evenement;
@@ -27,39 +26,39 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use App\Entity\Client;
 use App\Repository\ClientRepository;
 use App\Entity\Prestation;
-
-
-
-
+use App\Entity\Etat;
 
 /**
+ *
  * @Route("/client")
  */
 class ClientEvenementController extends AbstractController
 {
-    
-     /**
+
+    /**
+     *
      * @Route("/{id}/event", name="client_evenement_index", methods={"GET"})
      */
     public function index(EvenementRepository $evenementRepository, ClientRepository $clientRepository, Client $client): Response
     {
-
         return $this->render('evenement/index.html.twig', [
             'idClient' => $client->getId(),
-            'evenements' => $evenementRepository->findBy(['client'=>$client]),
+            'evenements' => $evenementRepository->findBy([
+                'client' => $client
+            ])
         ]);
     }
 
     /**
+     *
      * @Route("/{id}/event/new", name="client_evenement_new", methods={"GET","POST"})
      */
     public function new(Request $request, Client $client): Response
     {
-        
         $evenement = new Evenement();
         $form = $this->createForm(EvenementType::class, $evenement);
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $client->addEvenement($evenement);
             $evenement->setClient($client);
@@ -68,31 +67,34 @@ class ClientEvenementController extends AbstractController
             $entityManager->persist($client);
             $entityManager->flush();
 
-            return $this->forward('App\Controller\ClientEvenementController::index',['id'=>$client->getId(),]);
+            return $this->forward('App\Controller\ClientEvenementController::index', [
+                'id' => $client->getId()
+            ]);
         }
 
         return $this->render('evenement/new.html.twig', [
             'idClient' => $client->getId(),
             'evenement' => $evenement,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
     }
 
     /**
+     *
      * @Route("/{id}/event/{id_event}", name="client_evenement_show", methods={"GET"})
      * @Entity("evenement",expr="repository.find(id_event)")
      */
     public function show(Client $client, Evenement $evenement): Response
-    {   
-        
+    {
         dump($client);
         return $this->render('evenement/show.html.twig', [
             'evenement' => $evenement,
-            'idClient' => $client->getId(),
+            'idClient' => $client->getId()
         ]);
     }
 
     /**
+     *
      * @Route("/{id}/event/{id_event}/edit", name="client_evenement_edit", methods={"GET","POST"})
      * @Entity("evenement",expr="repository.find(id_event)")
      */
@@ -104,28 +106,29 @@ class ClientEvenementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->getDoctrine()
+                ->getManager()
+                ->flush();
 
             return $this->redirectToRoute('client_evenement_index', [
-                'id' => $client->getId(),
+                'id' => $client->getId()
             ]);
         }
 
         return $this->render('evenement/edit.html.twig', [
             'idClient' => $client->getId(),
             'evenement' => $evenement,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
-        
     }
-    
-   
+
     /**
+     *
      * @Route("/{id}", name="client_evenement_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Evenement $evenement): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$evenement->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $evenement->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($evenement);
             $entityManager->flush();
@@ -133,37 +136,92 @@ class ClientEvenementController extends AbstractController
 
         return $this->redirectToRoute('evenement_index');
     }
-    
-    
+
     /**
+     *
      * @Route("/{id}/event/{id_event}/liste", name="client_evenement_prestations", methods={"GET"})
      * @Entity("evenement",expr="repository.find(id_event)")
      */
     public function afficherListePrestations(Client $client, Evenement $evenement): Response
     {
-        
         dump($client);
+        $em = $this->getDoctrine()->getManager();
+        $etatProposer = $em->getRepository(Etat::class)->find(11);
+        $etatAccepter = $em->getRepository(Etat::class)->find(12);
+        $etatRefuser = $em->getRepository(Etat::class)->find(13);
         $listePrestations = $evenement->getPrestations();
+
+        $listeProposer = $em->getRepository(Prestation::class)->findBy([
+            "etatPrestation" => $etatProposer
+        ]);
+        $listeAccepter = $em->getRepository(Prestation::class)->findBy([
+            "etatPrestation" => $etatAccepter
+        ]);
+        $listeRefuser = $em->getRepository(Prestation::class)->findBy([
+            "etatPrestation" => $etatRefuser
+        ]);
+
         return $this->render('evenement/listePrestations.html.twig', [
             'evenement' => $evenement,
             'idClient' => $client->getId(),
-            'listePrestations' => $listePrestations,
+            'listePrestation' => $listePrestations,
+            'listeProposer' => $listeProposer,
+            'listeAccepter' => $listeAccepter,
+            'listeRefuser' => $listeRefuser
         ]);
     }
-    
+
     /**
+     *
      * @Route("/{id}/event/{id_event}/prestation/{id_prest}", name="event_description_prestation", methods={"GET"})
      * @Entity("evenement",expr="repository.find(id_event)")
      * @Entity("prestation",expr="repository.find(id_prest)")
      */
     public function afficherDescription(Client $client, Evenement $evenement, Prestation $prestation): Response
     {
-        
         return $this->render('prestation/show_prestation_client.html.twig', [
             'evenement' => $evenement,
             'idClient' => $client->getId(),
-            'prestation' => $prestation,
+            'prestation' => $prestation
         ]);
     }
-    
+
+    /**
+     *
+     * @Route("/{id}/event/{id_event}/liste/{id_prest}/{action}", name="changer_etat_prestation", methods={"GET"})
+     * @Entity("evenement",expr="repository.find(id_event)")
+     * @Entity("prestation",expr="repository.find(id_prest)")
+     */
+    public function changeEtatPrestation(Client $client, Evenement $evenement, Prestation $prestation, String $action)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $etatAccepter = $em->getRepository(Etat::class)->find(12);
+        $etatProposer = $em->getRepository(Etat::class)->find(11);
+        $etatRefuser = $em->getRepository(Etat::class)->find(13);
+        if ($action == "confirmer") {
+            $prestation->setEtatPrestation($etatAccepter);
+        }
+        if ($action == "refuser") {
+            $prestation->setEtatPrestation($etatRefuser);
+        }
+        $em->persist($prestation);
+        $em->flush();
+
+        $listeAccepter = $em->getRepository(Prestation::class)->findBy([
+            "etatPrestation" => $etatAccepter
+        ]);
+        $listeRefuser = $em->getRepository(Prestation::class)->findBy([
+            "etatPrestation" => $etatRefuser
+        ]);
+        $listeProposer = $em->getRepository(Prestation::class)->findBy([
+            "etatPrestation" => $etatProposer
+        ]);
+        return $this->redirectToRoute('client_evenement_prestations', [
+            'id_event' => $evenement->getId(),
+            'id' => $client->getId(),
+            'listeProposer' => $listeProposer,
+            'listeAccepter' => $listeAccepter,
+            'listeRefuser' => $listeRefuser
+        ]);
+    }
 }
