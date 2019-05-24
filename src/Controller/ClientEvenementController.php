@@ -151,15 +151,9 @@ class ClientEvenementController extends AbstractController
         $etatRefuser = $em->getRepository(Etat::class)->find(13);
         $listePrestations = $evenement->getPrestations();
 
-        $listeProposer = $em->getRepository(Prestation::class)->findBy([
-            "etatPrestation" => $etatProposer
-        ]);
-        $listeAccepter = $em->getRepository(Prestation::class)->findBy([
-            "etatPrestation" => $etatAccepter
-        ]);
-        $listeRefuser = $em->getRepository(Prestation::class)->findBy([
-            "etatPrestation" => $etatRefuser
-        ]);
+        $listeProposer = $em->getRepository(Prestation::class)->findBy(array("evenement"=>$evenement,"etatPrestation" => $etatProposer));
+        $listeAccepter = $em->getRepository(Prestation::class)->findBy(array("evenement"=>$evenement,"etatPrestation" => $etatAccepter));
+        $listeRefuser = $em->getRepository(Prestation::class)->findBy(array("evenement"=>$evenement,"etatPrestation" => $etatRefuser));
 
         return $this->render('evenement/listePrestations.html.twig', [
             'evenement' => $evenement,
