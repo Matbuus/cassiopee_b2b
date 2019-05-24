@@ -145,11 +145,29 @@ class ClientEvenementController extends AbstractController
     public function afficherListePrestations(Client $client, Evenement $evenement): Response
     {
         dump($client);
+        $em = $this->getDoctrine()->getManager();
+        $etatProposer = $em->getRepository(Etat::class)->find(11);
+        $etatAccepter = $em->getRepository(Etat::class)->find(12);
+        $etatRefuser = $em->getRepository(Etat::class)->find(13);
         $listePrestations = $evenement->getPrestations();
+
+        $listeProposer = $em->getRepository(Prestation::class)->findBy([
+            "etatPrestation" => $etatProposer
+        ]);
+        $listeAccepter = $em->getRepository(Prestation::class)->findBy([
+            "etatPrestation" => $etatAccepter
+        ]);
+        $listeRefuser = $em->getRepository(Prestation::class)->findBy([
+            "etatPrestation" => $etatRefuser
+        ]);
+
         return $this->render('evenement/listePrestations.html.twig', [
             'evenement' => $evenement,
             'idClient' => $client->getId(),
-            'listePrestations' => $listePrestations
+            'listePrestation' => $listePrestations,
+            'listeProposer' => $listeProposer,
+            'listeAccepter' => $listeAccepter,
+            'listeRefuser' => $listeRefuser
         ]);
     }
 
@@ -170,26 +188,40 @@ class ClientEvenementController extends AbstractController
 
     /**
      *
-     * @Route("/{id}/event/{id_event}/liste/{id_prest}/{action}", name="accept_prestation", methods={"GET"})
+     * @Route("/{id}/event/{id_event}/liste/{id_prest}/{action}", name="changer_etat_prestation", methods={"GET"})
      * @Entity("evenement",expr="repository.find(id_event)")
      * @Entity("prestation",expr="repository.find(id_prest)")
      */
     public function changeEtatPrestation(Client $client, Evenement $evenement, Prestation $prestation, String $action)
     {
         $em = $this->getDoctrine()->getManager();
+        $etatAccepter = $em->getRepository(Etat::class)->find(12);
+        $etatProposer = $em->getRepository(Etat::class)->find(11);
+        $etatRefuser = $em->getRepository(Etat::class)->find(13);
         if ($action == "confirmer") {
-            $etatAccepter = $em->getRepository(Etat::class)->find(12);
             $prestation->setEtatPrestation($etatAccepter);
         }
         if ($action == "refuser") {
-            $etatAccepter = $em->getRepository(Etat::class)->find(13);
-            $prestation->setEtatPrestation($etatAccepter);
+            $prestation->setEtatPrestation($etatRefuser);
         }
         $em->persist($prestation);
         $em->flush();
+
+        $listeAccepter = $em->getRepository(Prestation::class)->findBy([
+            "etatPrestation" => $etatAccepter
+        ]);
+        $listeRefuser = $em->getRepository(Prestation::class)->findBy([
+            "etatPrestation" => $etatRefuser
+        ]);
+        $listeProposer = $em->getRepository(Prestation::class)->findBy([
+            "etatPrestation" => $etatProposer
+        ]);
         return $this->redirectToRoute('client_evenement_prestations', [
             'id_event' => $evenement->getId(),
-            'id' => $client->getId()
+            'id' => $client->getId(),
+            'listeProposer' => $listeProposer,
+            'listeAccepter' => $listeAccepter,
+            'listeRefuser' => $listeRefuser
         ]);
     }
 }

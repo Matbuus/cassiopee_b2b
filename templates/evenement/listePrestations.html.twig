@@ -18,8 +18,20 @@
             </tr>
         </thead>
         <tbody>
-        {% for prestation in listePrestations %}
-        	{% if prestation.etatPrestation.titre == "Acceptee" or prestation.etatPrestation.titre == "Proposee" %}
+        {% for prestation in listeAccepter %}	
+            <tr>
+                <td>{{ prestation.id }}</td>
+                <td>{{ prestation.typePrestation.nomType }}</td>
+                <td>{{ prestation.typePrestation.tarifPublic }}</td>
+                <td>{{ prestation.dateDebut ? prestation.dateDebut|date('Y-m-d') : ''  }}</td>
+               	<td> {{ prestation.etatPrestation.titre }} </td>
+                <td>
+                    <a href="{{ path('event_description_prestation', {'id': idClient, 'id_event': evenement.id,'id_prest': prestation.id }) }}">Description</a>
+                </td>
+           	</tr>
+        {% endfor %}
+        
+        {% for prestation in listeProposer %}	
             <tr>
                 <td>{{ prestation.id }}</td>
                 <td>{{ prestation.typePrestation.nomType }}</td>
@@ -29,20 +41,16 @@
                 <td>
                     <a href="{{ path('event_description_prestation', {'id': idClient, 'id_event': evenement.id,'id_prest': prestation.id }) }}">Description</a>
                     {% if prestation.etatPrestation == "Proposee" %}
-                    <a href="{{ path('accept_prestation', {'id': idClient, 'id_event': evenement.id, 'id_prest': prestation.id,'action':"confirmer"}) }}">Confirmer</a>
-                    <a href="{{ path('accept_prestation', {'id': idClient, 'id_event': evenement.id, 'id_prest': prestation.id, 'action':"refuser"}) }}">refuser</a>
+                    <a href="{{ path('changer_etat_prestation', {'id': idClient, 'id_event': evenement.id, 'id_prest': prestation.id, 'action':"confirmer"}) }}">Confirmer</a>
+                    <a href="{{ path('changer_etat_prestation', {'id': idClient, 'id_event': evenement.id, 'id_prest': prestation.id, 'action':"refuser"}) }}">refuser</a>
                 	{% endif %}
                 </td>
            	</tr>
-           	{% endif %}
-           	
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
         {% endfor %}
         </tbody>
+        
     </table>
+    
     <a href="{{ path('client_evenement_index', {'id': idClient}) }}">Retour a la liste des events</a>
     <a href="{{ path('client_evenement_edit', {'id': idClient, 'id_event': evenement.id}) }}">Description generale de l'event</a>
     

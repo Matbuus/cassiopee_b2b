@@ -36,8 +36,8 @@
 
     <a href="{{ path('client_evenement_prestations', {'id': idClient, 'id_event': evenement.id  }) }}">retour a la liste des prestations</a>
     {% if prestation.etatPrestation == "Proposee" %}
-  	    <a href="{{ path('accept_prestation', {'id': idClient, 'id_event': evenement.id, 'id_prest': prestation.id,'action':"confirmer"}) }}">Confirmer</a>
-    	<a href="{{ path('accept_prestation', {'id': idClient, 'id_event': evenement.id, 'id_prest': prestation.id, 'action':"refuser"}) }}">refuser</a>
+  	    <a href="{{ path('changer_etat_prestation', {'id': idClient, 'id_event': evenement.id, 'id_prest': prestation.id,'action':"confirmer"}) }}">Confirmer</a>
+    	<a href="{{ path('changer_etat_prestation', {'id': idClient, 'id_event': evenement.id, 'id_prest': prestation.id, 'action':"refuser"}) }}">refuser</a>
 	{% endif %}
  
 {% endblock %}
