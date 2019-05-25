@@ -6,7 +6,7 @@ Repository Projet Cassiopée Réalisé par:
 
 Description du projet:
 
-
+run "composer install" 
 
 Suivi:
 
@@ -14,34 +14,38 @@ Partie BACK END:
 
 Cas d'utilisation Admin:
 [X]Ajouter/Modifier/Supprimer type d'evenement
-[]Ajouter type presta à la specialité
-[]Supprimer type presta de la specialité
-[]Modifier type prestation
-[]Ajouter Lieu
-[]Modifier Lieu
-[]Supprimer Lieu
-[]Ajouter specialité
-[]Supprimer specialité
+[X]Ajouter type presta à la specialité
+[X]Supprimer type presta de la specialité
+[X]Modifier type prestation
+[X]Ajouter Lieu
+[X]Modifier Lieu
+[X]Supprimer Lieu
+[X]Ajouter specialité
+[X]Supprimer specialité
 
 
 Cas d'utilisation Client:
-[]Créer evenement
-[]Ajouter prestation a evenement
-[]Supprimer prestation de evenement
-[]Choisir liste des prestataires
-[]Accepter devis
+[X]Créer evenement
+[X]Ajouter prestation a evenement
+[X]Supprimer prestation de evenement
+[X]Choisir liste des prestataires
+[X]Accepter devis
 []Noter prestation ou evenement
 []Modifier lieu evenement
 
 Cas d'utilisation Partenaire:
 []Noter Client
-[]Ajouter Spécialité
-[]Supprimer Spécialité
-[]Ajouter type prestation
-[]Supprimer Type Prestation
-[]Proposer Devis
+[X]Ajouter Spécialité
+[X]Supprimer Spécialité
+[X]Ajouter type prestation
+[X]Supprimer Type Prestation
+[X]Proposer Devis
 
 
 
 Partie FRONT END:
+
+HTML/CSS/JavaScript, React
+
+
 
