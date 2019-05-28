@@ -1,4 +1,7 @@
 import Places from 'places.js'
+import Map from './modules/map.js'
+
+Map.init()
 
 let inputAddress = document.querySelector('#evenement_address')
 if( inputAddress !== null){
