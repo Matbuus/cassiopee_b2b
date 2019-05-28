@@ -17,6 +17,11 @@ class Evenement1Type extends AbstractType
             ->add('client')
             ->add('localisation')
             ->add('typeEvenement')
+            ->add('address')
+            ->add('city')
+            ->add('postal')
+            ->add('lat')
+            ->add('lng')
         ;
     }
 

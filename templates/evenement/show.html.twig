@@ -16,6 +16,14 @@
                 <td>{{ evenement.titre }}</td>
             </tr>
             <tr>
+                <th>Addresse</th>
+                <td>{{ evenement.address }}</td>
+            </tr>
+            <tr>
+                <th>Localisation</th>
+                <td>{{ evenement.lat }} ; {{ evenement.lng }}</td>
+            </tr>
+            <tr>
                 <th>Date</th>
                 <td>{{ evenement.date ? evenement.date|date('Y-m-d') : '' }}</td>
             </tr>
