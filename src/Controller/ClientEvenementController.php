@@ -41,12 +41,21 @@ class ClientEvenementController extends AbstractController
      */
     public function index(EvenementRepository $evenementRepository, ClientRepository $clientRepository, Client $client): Response
     {
-        return $this->render('evenement/index.html.twig', [
-            'idClient' => $client->getId(),
+        // return $this->render('evenement/index_react.html.twig', [
+        // 'idClient' => $client->getId(),
+        // 'evenements' => $evenementRepository->findBy([
+        // 'client' => $client
+        // ])
+        // ]);
+        $response = new Response();
+        $response->setContent(json_encode([
+            'clientId' => $client->getId(),
             'evenements' => $evenementRepository->findBy([
                 'client' => $client
             ])
-        ]);
+        
+        ]));
+        return $response;
     }
 
     /**
@@ -58,7 +67,7 @@ class ClientEvenementController extends AbstractController
         $evenement = new Evenement();
         $form = $this->createForm(EvenementType::class, $evenement);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $client->addEvenement($evenement);
             $evenement->setClient($client);
@@ -66,12 +75,12 @@ class ClientEvenementController extends AbstractController
             $entityManager->persist($evenement);
             $entityManager->persist($client);
             $entityManager->flush();
-
+            
             return $this->forward('App\Controller\ClientEvenementController::index', [
                 'id' => $client->getId()
             ]);
         }
-
+        
         return $this->render('evenement/new.html.twig', [
             'idClient' => $client->getId(),
             'evenement' => $evenement,
@@ -104,17 +113,17 @@ class ClientEvenementController extends AbstractController
         dump($evenement);
         $form = $this->createForm(EvenementType::class, $evenement);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()
                 ->getManager()
                 ->flush();
-
+            
             return $this->redirectToRoute('client_evenement_index', [
                 'id' => $client->getId()
             ]);
         }
-
+        
         return $this->render('evenement/edit.html.twig', [
             'idClient' => $client->getId(),
             'evenement' => $evenement,
@@ -133,7 +142,7 @@ class ClientEvenementController extends AbstractController
             $entityManager->remove($evenement);
             $entityManager->flush();
         }
-
+        
         return $this->redirectToRoute('evenement_index');
     }
 
@@ -150,11 +159,20 @@ class ClientEvenementController extends AbstractController
         $etatAccepter = $em->getRepository(Etat::class)->find(12);
         $etatRefuser = $em->getRepository(Etat::class)->find(13);
         $listePrestations = $evenement->getPrestations();
-
-        $listeProposer = $em->getRepository(Prestation::class)->findBy(array("evenement"=>$evenement,"etatPrestation" => $etatProposer));
-        $listeAccepter = $em->getRepository(Prestation::class)->findBy(array("evenement"=>$evenement,"etatPrestation" => $etatAccepter));
-        $listeRefuser = $em->getRepository(Prestation::class)->findBy(array("evenement"=>$evenement,"etatPrestation" => $etatRefuser));
-
+        
+        $listeProposer = $em->getRepository(Prestation::class)->findBy(array(
+            "evenement" => $evenement,
+            "etatPrestation" => $etatProposer
+        ));
+        $listeAccepter = $em->getRepository(Prestation::class)->findBy(array(
+            "evenement" => $evenement,
+            "etatPrestation" => $etatAccepter
+        ));
+        $listeRefuser = $em->getRepository(Prestation::class)->findBy(array(
+            "evenement" => $evenement,
+            "etatPrestation" => $etatRefuser
+        ));
+        
         return $this->render('evenement/listePrestations.html.twig', [
             'evenement' => $evenement,
             'idClient' => $client->getId(),
@@ -200,7 +218,7 @@ class ClientEvenementController extends AbstractController
         }
         $em->persist($prestation);
         $em->flush();
-
+        
         $listeAccepter = $em->getRepository(Prestation::class)->findBy([
             "etatPrestation" => $etatAccepter
         ]);

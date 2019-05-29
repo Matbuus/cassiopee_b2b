@@ -4,12 +4,13 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use JsonSerializable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PartenaireRepository")
  */
-class Partenaire extends Client
+class Partenaire extends Client implements JsonSerializable
 {
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Metier", inversedBy="partenaires")
@@ -118,6 +119,19 @@ class Partenaire extends Client
 
         return $this;
     }
-
+    
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'nom' => $this->getNom(),
+            'prenom' => $this->getPrenom(),
+            'evenements' => $this->getEvenements(),
+            'metier' => $this->getMetier(),
+            'typePrestations' => $this->getTypePrestations(),
+            'prestationsProposees' => $this->getPrestationsProposees(),
+        ];
+        
+    }
 
 }

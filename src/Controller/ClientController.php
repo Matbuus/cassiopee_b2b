@@ -20,9 +20,14 @@ class ClientController extends AbstractController
      */
     public function index(ClientRepository $clientRepository): Response
     {
-        return $this->render('client/index.html.twig', [
-            'clients' => $clientRepository->findAll(),
-        ]);
+//         return $this->render('client/index.html.twig', [
+//             'clients' => $clientRepository->findAll()
+//         ]);
+        $response = new Response();
+        $response->setContent(json_encode([
+            'clients' => $clientRepository->findAll()
+        ]));
+        return $response;
     }
 
     /**

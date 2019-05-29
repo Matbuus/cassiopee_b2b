@@ -4,12 +4,13 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use JsonSerializable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LocalisationRepository")
  */
-class Localisation
+class Localisation implements JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -102,4 +103,14 @@ class Localisation
     {
         return $this->getLongitude()." ".$this->getLatitude();
     }
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'longitude' => $this->getLongitude(),
+            'latitude' => $this->getLatitude(),
+            'evenements' => $this->getEvenements(),
+        ];
+    }
+
 }

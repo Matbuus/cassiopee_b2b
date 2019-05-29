@@ -2,9 +2,11 @@
 
 {% block title %}Evenements du client {{ idClient }}{% endblock %}
 
-{% block body %}
-    <h1>Evenement du client {{ idClient }}</h1>
 
+{% block body %}
+
+    <h1>Evenement du client {{ idClient }}</h1>
+    <div id="event-list" data-events={{evenements | json_encode }}> </div>
     <table class="table">
         <thead>
             <tr>
@@ -17,6 +19,7 @@
         </thead>
         <tbody>
         {% for evenement in evenements %}
+
             <tr>
                 <td>{{ evenement.id }}</td>
                 <td>{{ evenement.titre }}</td>
@@ -26,7 +29,9 @@
                     <a href="{{ path('client_evenement_show', {'id': idClient, 'id_event': evenement.id }) }}">show</a>
                     <a href="{{ path('client_evenement_edit', {'id': idClient, 'id_event': evenement.id}) }}">edit</a>
                 </td>
+
             </tr>
+           
         {% else %}
             <tr>
                 <td colspan="4">no records found</td>
@@ -35,4 +40,10 @@
         </tbody>
     </table>
     <a href="{{ path('client_evenement_new', {'id': idClient}) }}">Create new</a>
+
+     {% for evenement in evenements %}
+        <p> hello </p>
+        <span class="event-in-list" data-event="{{ (evenement | json_encode) }}"></span>
+     {% endfor %}
 {% endblock %}
+

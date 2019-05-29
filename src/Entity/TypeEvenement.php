@@ -4,12 +4,13 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use JsonSerializable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TypeEvenementRepository")
  */
-class TypeEvenement
+class TypeEvenement implements JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -125,6 +126,16 @@ class TypeEvenement
 
         return $this;
     }
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'nom' => $this->getNom(),
+            'evenements' => $this->getEvenements(),
+            'typePrestations' => $this->getTypePrestations(),
+        ];
+    }
+
 
 
 

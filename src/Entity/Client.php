@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use JsonSerializable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\MappedSuperclass()
  * @ORM\InheritanceType("SINGLE_TABLE")
  */
-class Client
+class Client implements JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -107,6 +108,17 @@ class Client
     {
         return $this->getNom()." ".$this->getPrenom();
     }
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'nom' => $this->getNom(),
+            'prenom' => $this->getPrenom(),
+            'evenements' => $this->getEvenements(),
+        ];
+        
+    }
+
 
 
 }

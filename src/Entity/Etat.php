@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
+use JsonSerializable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EtatRepository")
  */
-class Etat
+class Etat implements JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -42,4 +43,12 @@ class Etat
     {
         return $this->getTitre();
     }
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'titre' => $this->getTitre(),
+        ];
+    }
+
 }
