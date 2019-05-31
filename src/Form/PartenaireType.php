@@ -6,6 +6,7 @@ use App\Entity\Partenaire;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class PartenaireType extends AbstractType
 {
@@ -15,6 +16,11 @@ class PartenaireType extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('metier')
+            ->add('address')
+            ->add('city')
+            ->add('postal')
+            ->add('lat')
+            ->add('lng')
             //->add('typePrestations')
         ;
     }

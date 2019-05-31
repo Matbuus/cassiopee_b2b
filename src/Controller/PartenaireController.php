@@ -166,9 +166,29 @@ class PartenaireController extends AbstractController
                     $events[] = $event;
         }
         dump($events);
+        $i = 0;
+        $distevent = array();
+        foreach ($events as $evt){
+            $distance = 3956 * 2 * asin(sqrt( pow(sin(($partenaire->getLat() - $evt->getLat()) *  pi()/180 / 2) , 2) + cos($partenaire->getLat() * pi()/180) * cos($evt->getLat() * pi()/180) * pow(sin($partenaire->getLng() - $evt->getLng()) * pi()/180 / 2 ,2) ));
+            $distevent[$i] = $distance;
+            $i++;
+        }
+        $distanceEvenement=$distevent;
+        $sortedEventsIndex = array();
+        dump(count($distevent));
+        $maxdist=max($distevent);
+        for($i=1;$i<=count($distevent);$i++)
+        {
+            $mindist= min($distevent);
+            $sortedEventsIndex[$i-1]=array_keys($distevent, $mindist)[0];
+            $distevent[array_keys($distevent, $mindist)[0]]= $maxdist+1;
+        }
+        dump($sortedEventsIndex);
         return $this->render('evenement/liste_events_partenaire.html.twig', [
             'id' => $partenaire->getId(),
             'evenements' => $events,
+            'sortedEventsIndex'=> $sortedEventsIndex,
+            'distanceEvenement'=>$distanceEvenement,
         ]);
     }
     

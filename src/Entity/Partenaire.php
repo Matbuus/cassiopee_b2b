@@ -26,6 +26,9 @@ class Partenaire extends Client
      */
     private $prestationsProposees;
 
+  
+
+
     public function __construct()
     {
         $this->metiers = new ArrayCollection();
@@ -119,5 +122,6 @@ class Partenaire extends Client
         return $this;
     }
 
+   
 
 }

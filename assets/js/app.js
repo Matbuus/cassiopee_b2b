@@ -3,10 +3,10 @@ import Map from './modules/map.js'
 
 Map.init()
 
-let inputAddress = document.querySelector('#evenement_address')
-if( inputAddress !== null){
+let inputAddressEvent = document.querySelector('#evenement_address')
+if( inputAddressEvent !== null){
 	let place = Places({
-			container: inputAddress
+			container: inputAddressEvent
 			})
 	place.on('change', e => {
 		document.querySelector('#evenement_city').value = e.suggestion.city
@@ -15,6 +15,31 @@ if( inputAddress !== null){
 		document.querySelector('#evenement_lng').value = e.suggestion.latlng.lng
 	})
 }
+
+let inputAddressClient = document.querySelector('#client_address')
+if( inputAddressClient !== null){
+	let place = Places({
+			container: inputAddressClient
+			})
+	place.on('change', e => {
+		document.querySelector('#client_city').value = e.suggestion.city
+		document.querySelector('#client_postal').value = e.suggestion.postcode
+		document.querySelector('#client_lat').value = e.suggestion.latlng.lat
+		document.querySelector('#client_lng').value = e.suggestion.latlng.lng
+	})
+}
+
+let inputAddressPartenaire = document.querySelector('#partenaire_address')
+if( inputAddressPartenaire !== null){
+	let place = Places({ container: inputAddressPartenaire })
+	place.on('change', e => {
+		document.querySelector('#partenaire_city').value = e.suggestion.city
+		document.querySelector('#partenaire_postal').value = e.suggestion.postcode
+		document.querySelector('#partenaire_lat').value = e.suggestion.latlng.lat
+		document.querySelector('#partenaire_lng').value = e.suggestion.latlng.lng
+	})
+}
+
 // any CSS you require will output into a single css file (app.css in this case)
 require('../css/app.css');
 
