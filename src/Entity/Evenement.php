@@ -267,7 +267,12 @@ class Evenement implements JsonSerializable
             'id' => $this->getId(),
             'titre' => $this->getTitre(),
             'date' => $this->getDate(),
-            'type' => $this->getTypeEvenement()
+            'client' => $this->getClient(),
+            'address' => $this->getAddress(),
+            'type' => $this->getTypeEvenement(),
+            'lat' => $this->getLat(),
+            'lng' => $this->getLng(),
+            
             ];
     }
 

@@ -108,6 +108,7 @@ class Client implements JsonSerializable
     {
         return $this->getNom()." ".$this->getPrenom();
     }
+
     public function jsonSerialize()
     {
         return [

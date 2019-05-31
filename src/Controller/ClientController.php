@@ -27,6 +27,9 @@ class ClientController extends AbstractController
         $response->setContent(json_encode([
             'clients' => $clientRepository->findAll()
         ]));
+        $response->headers->set('Content-Type', 'application/json');
+            // Allow all websites
+        $response->headers->set('Access-Control-Allow-Origin', '*');
         return $response;
     }
 
@@ -90,12 +93,20 @@ class ClientController extends AbstractController
      */
     public function delete(Request $request, Client $client): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$client->getId(), $request->request->get('_token'))) {
+       // if ($this->isCsrfTokenValid('delete'.$client->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($client);
             $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('client_index');
+     //   }
+            $response = new Response();
+//             $response->setContent(json_encode([
+//                 'clients' => $clientRepository->findAll()
+//             ]));
+            $response->headers->set('Content-Type', 'application/json');
+            
+            // Allow all websites
+            $response->headers->set('Access-Control-Allow-Origin', '*');
+            return $response;
+        //return $this->redirectToRoute('client_index');
     }
 }

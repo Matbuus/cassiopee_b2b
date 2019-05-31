@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 import Test2 from './test2';
 import ClientList from './client-list';
+import EventList from './event-list';
 
 //Map.init()
 //yarn add react-router-dom --dev
@@ -54,10 +55,12 @@ render(){
                 <button className='button' onClick={this.handleClick}>Click Me</button>
                 <ul>
                     <NavLink to="/clients">Liste des clients</NavLink>
+                    <NavLink to="/evenements">Liste des evenements</NavLink>
                     <NavLink to="/">Another Page</NavLink>
                 </ul>
                 <Switch>
                     <Route path="/clients" component={ClientList}/>
+                    <Route path="/evenements" component={EventList}/>
                     <Route path="/" component={Test2}/>
                 </Switch>
             </div>

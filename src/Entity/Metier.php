@@ -62,7 +62,7 @@ class Metier implements JsonSerializable
     /**
      * @return Collection|TypePrestation[]
      */
-    public function getTypesPrestations(): Collection
+    public function getTypesPrestations()
     {
         return $this->typesPrestations;
     }

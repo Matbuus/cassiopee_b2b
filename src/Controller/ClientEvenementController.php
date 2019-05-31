@@ -55,6 +55,9 @@ class ClientEvenementController extends AbstractController
             ])
         
         ]));
+        $response->headers->set('Content-Type', 'application/json');
+        // Allow all websites
+        $response->headers->set('Access-Control-Allow-Origin', '*');
         return $response;
     }
 
@@ -95,11 +98,23 @@ class ClientEvenementController extends AbstractController
      */
     public function show(Client $client, Evenement $evenement): Response
     {
-        dump($client);
-        return $this->render('evenement/show.html.twig', [
+        
+//         dump($client);
+//         return $this->render('evenement/show.html.twig', [
+//             'evenement' => $evenement,
+//             'idClient' => $client->getId()
+//         ]);
+        
+        $response = new Response();
+        $response->setContent(json_encode([
             'evenement' => $evenement,
             'idClient' => $client->getId()
-        ]);
+         
+        ]));
+        $response->headers->set('Content-Type', 'application/json');
+        // Allow all websites
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
     }
 
     /**

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios/index";
-import Client from './client';
+import {BrowserRouter, NavLink, Route, Switch} from 'react-router-dom';
 console.log("slt");
 class ClientList extends Component {
 
@@ -25,32 +25,39 @@ class ClientList extends Component {
 
 
         console.log(this.state.clients);
+        const table = [];
+        const children = [];
+        this.state.clients.forEach(
+            (client) => (children.push(<tr>
+                <td> {client.id }</td>
+                <td> {client.nom }</td>
+                <td>{ client.prenom }</td>
+            </tr>)));
 
-        const table = []
         table.push(
             <table className="table">
-                <tbody>
+                <thead>
                 <tr>
                     <th>Id</th>
                     <th>Nom</th>
                     <th>Prenom</th>
                     <th>actions</th>
                 </tr>
-                </tbody>
+                </thead>
+
+            <tbody>
+            {children}
+            </tbody>
             </table>
         );
-        this.state.clients.forEach(
-            (client) => (table.push(<Client client={client}/>))
-        );
 
-        //   for (const client of this.clients) {
-        //    console.log(client);
-        //  table.push(<Client client={client} />);
-        //   }
+
 
         return (
             <div>
                 {table}
+                <NavLink to="/" className="btn btn-success">Liste des clients</NavLink>
+
             </div>
         )
     }

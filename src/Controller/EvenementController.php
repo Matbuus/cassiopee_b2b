@@ -23,9 +23,17 @@ class EvenementController extends AbstractController
      */
     public function index(EvenementRepository $evenementRepository): Response
     {
-        return $this->render('evenement/index.html.twig', [
-            'evenements' => $evenementRepository->findAll(),
-        ]);
+      //  return $this->render('evenement/index.html.twig', [
+      //      'evenements' => $evenementRepository->findAll(),
+      //  ]);
+         $response = new Response();
+              $response->setContent(json_encode([
+                  'evenements' => $evenementRepository->findAll(),
+              ]));
+             $response->headers->set('Content-Type', 'application/json');
+                          // Allow all websites
+                      $response->headers->set('Access-Control-Allow-Origin', '*');
+              return $response;
     }
 
     /**
