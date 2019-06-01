@@ -93,23 +93,79 @@ class ClientEvenementController extends AbstractController
 
     /**
      *
+     * @Route("/{id}/event/newEvent", name="client_evenement_newR", methods={"POST"})
+     */
+    public function newReact(Request $request, Client $client): Response
+    {
+        $evenement = new Evenement();
+        $data = json_decode($request->getContent(), true);
+        $request->request->replace($data);
+        
+        $evenement->setAddress($request->get("address"));
+        $evenement->setTitre($request->get("titre"));
+        $evenement->setCity($request->get("city"));
+        $evenement->setPostal($request->get("postal"));
+        $evenement->setClient($client);
+        $date = new \DateTime();
+        $date->setDate($request->get("year"), $request->get("month"), $request->get("date"));
+        $evenement->setDate($date);
+        $em = $this->getDoctrine()->getManager();
+        $typeEvent = $em->getRepository(TypeEvenement::class)->findOneBy([
+            'nom' => $request->get("nomType")
+        ]);
+        
+        if ($typeEvent == null) {
+            $response = new Response();
+            $response->headers->set('Content-Type', 'application/json');
+            // Allow all websites
+            $response->headers->set('Access-Control-Allow-Origin', '*');
+            return $response;
+        }
+        
+        $evenement->setTypeEvenement($typeEvent);
+        $evenement->setLat($request->get("lat"));
+        $evenement->setLng($request->get("lng"));
+        $evenement->setEtatEvenement($em->getRepository(Etat::class)
+            ->find(7));
+        $localisation = new Localisation();
+        $localisation->setLatitude($evenement->getLat());
+        $localisation->setLongitude($evenement->getLng());
+        $em->persist($localisation);
+        
+        $evenement->setLocalisation($localisation);
+        $client->addEvenement($evenement);
+        $em->persist($evenement);
+        $em->persist($client);
+        $em->flush();
+        
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent(json_encode([
+            'evenement' => $evenement,
+        ]));
+        // Allow all websites
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
+    }
+
+    /**
+     *
      * @Route("/{id}/event/{id_event}", name="client_evenement_show", methods={"GET"})
      * @Entity("evenement",expr="repository.find(id_event)")
      */
     public function show(Client $client, Evenement $evenement): Response
     {
         
-//         dump($client);
-//         return $this->render('evenement/show.html.twig', [
-//             'evenement' => $evenement,
-//             'idClient' => $client->getId()
-//         ]);
-        
+        // dump($client);
+        // return $this->render('evenement/show.html.twig', [
+        // 'evenement' => $evenement,
+        // 'idClient' => $client->getId()
+        // ]);
         $response = new Response();
         $response->setContent(json_encode([
             'evenement' => $evenement,
             'idClient' => $client->getId()
-         
+        
         ]));
         $response->headers->set('Content-Type', 'application/json');
         // Allow all websites

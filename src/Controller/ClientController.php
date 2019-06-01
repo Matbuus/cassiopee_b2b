@@ -61,9 +61,18 @@ class ClientController extends AbstractController
      */
     public function show(Client $client): Response
     {
-        return $this->render('client/show.html.twig', [
+//         return $this->render('client/show.html.twig', [
+//             'client' => $client,
+//         ]);
+
+        $response = new Response();
+        $response->setContent(json_encode([
             'client' => $client,
-        ]);
+        ]));
+        $response->headers->set('Content-Type', 'application/json');
+        // Allow all websites
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
     }
 
     /**

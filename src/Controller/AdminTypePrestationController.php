@@ -123,7 +123,6 @@ class AdminTypePrestationController extends AbstractController
         if($typeEvent == null){
             $response = new Response();
             $response->headers->set('Content-Type', 'application/json');
-            $response->headers->set('titre', $request->get($titre));
             // Allow all websites
             $response->headers->set('Access-Control-Allow-Origin', '*');
             return $response;
