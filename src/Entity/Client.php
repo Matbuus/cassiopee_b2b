@@ -5,13 +5,15 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use phpDocumentor\Reflection\Types\This;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  * @ORM\MappedSuperclass()
  * @ORM\InheritanceType("SINGLE_TABLE")
  */
-class Client
+class Client implements UserInterface,\Serializable
 {
     /**
      * @ORM\Id()
@@ -38,27 +40,37 @@ class Client
     /**
      * @ORM\Column(type="float", scale=5, precision=9)
      */
-    private $lat;
+    protected $lat;
 
     /**
      * @ORM\Column(type="float", scale=5, precision=9)
      */
-    private $lng;
+    protected $lng;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $address;
+    protected $address;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $city;
+    protected $city;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $postal;
+    protected $postal;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $email;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $password;
 
     public function __construct()
     {
@@ -192,6 +204,76 @@ class Client
 
         return $this;
     }
+    
+    
+
+   
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+    
+    public function getPassword()
+    {
+        return $this->password;
+    }
+    public function eraseCredentials()
+    {}
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getRoles()
+    {
+        return ['ROLE_CLIENT'];
+    }
+
+    public function getUsername()
+    {
+        return $this->email;
+    }
+    public function serialize()
+    {
+        return $this->serialize([
+            $this->id,
+            $this->nom,
+            $this->prenom,
+            $this->email,
+            $this->password,
+            
+        ]);
+    }
+
+    public function unserialize($serialized)
+    {
+        list(
+            $this->id,
+            $this->nom,
+            $this->prenom,
+            $this->email,
+            $this->password,
+            )= unserialize($serialized, ['allow_classes' => false]);
+    }
+
+
+   
+
 
 
 }

@@ -5,11 +5,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PartenaireRepository")
  */
-class Partenaire extends Client
+class Partenaire extends Client implements UserInterface 
 {
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Metier", inversedBy="partenaires")
@@ -120,6 +121,12 @@ class Partenaire extends Client
         }
 
         return $this;
+    }
+    
+    
+    public function getRoles()
+    {
+        return ['ROLE_PARTENAIRE'];
     }
 
    
