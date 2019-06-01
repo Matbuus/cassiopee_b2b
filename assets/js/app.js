@@ -1,12 +1,8 @@
 import Places from 'places.js';
 import Map from './modules/map.js'
 import axios from 'axios';
-import {BrowserRouter, NavLink, Route, Switch} from 'react-router-dom';
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
-import Test2 from './test2';
-import ClientList from './client-list';
-import EventList from './event-list';
 
 //Map.init()
 //yarn add react-router-dom --dev

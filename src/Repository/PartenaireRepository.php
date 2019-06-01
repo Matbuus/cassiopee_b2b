@@ -8,6 +8,7 @@ use App\Entity\Evenement;
 use Doctrine\ORM\Query;
 use App\Entity\Partenaire;
 
+
 /**
  * @method Partenaire|null find($id, $lockMode = null, $lockVersion = null)
  * @method Partenaire|null findOneBy(array $criteria, array $orderBy = null)
