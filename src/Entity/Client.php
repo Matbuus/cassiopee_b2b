@@ -32,34 +32,34 @@ class Client implements JsonSerializable
     protected $prenom;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Evenement", mappedBy="client")
+     * @ORM\OneToMany(targetEntity="App\Entity\Evenement", mappedBy="client", orphanRemoval=true)
      */
     protected $evenements;
 
     /**
      * @ORM\Column(type="float", scale=5, precision=9)
      */
-    private $lat;
+    protected $lat;
 
     /**
      * @ORM\Column(type="float", scale=5, precision=9)
      */
-    private $lng;
+    protected $lng;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $address;
+    protected $address;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $city;
+    protected $city;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $postal;
+    protected $postal;
 
     public function __construct()
     {
@@ -141,6 +141,11 @@ class Client implements JsonSerializable
             'nom' => $this->getNom(),
             'prenom' => $this->getPrenom(),
             'evenements' => $this->getEvenements(),
+            'address' => $this->getAddress(),
+            'lat' => $this->getLat(),
+            'lng' => $this->getLng(),
+            'city' => $this->getCity(),
+            'postal' => $this->getPostal(),
         ];
         
     }

@@ -141,6 +141,7 @@ class Prestation implements JsonSerializable
             'partenaire' => $this->getPartenaire(),
             'etatPrestation' => $this->getEtatPrestation(),
             'typePrestation' => $this->getTypePrestation(),
+            
         ];
     }
 

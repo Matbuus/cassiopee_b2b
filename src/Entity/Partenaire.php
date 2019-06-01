@@ -133,6 +133,10 @@ class Partenaire extends Client implements JsonSerializable
             'metier' => $this->getMetier(),
             'typePrestations' => $this->getTypePrestations(),
             'prestationsProposees' => $this->getPrestationsProposees(),
+            'lat' => $this->getLat(),
+            'lng' => $this->getLng(),
+            'address' => $this->getAddress(),
+            
         ];
         
     }

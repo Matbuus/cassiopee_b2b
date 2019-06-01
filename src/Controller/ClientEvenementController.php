@@ -108,19 +108,21 @@ class ClientEvenementController extends AbstractController
         $evenement->setClient($client);
         $date = new \DateTime();
         $date->setDate($request->get("year"), $request->get("month"), $request->get("date"));
+        $date->setTime($request->get("hours"), $request->get("minutes"));
         $evenement->setDate($date);
         $em = $this->getDoctrine()->getManager();
         $typeEvent = $em->getRepository(TypeEvenement::class)->findOneBy([
             'nom' => $request->get("nomType")
         ]);
         
-        if ($typeEvent == null) {
-            $response = new Response();
-            $response->headers->set('Content-Type', 'application/json');
-            // Allow all websites
-            $response->headers->set('Access-Control-Allow-Origin', '*');
-            return $response;
-        }
+//         if ($typeEvent == null) {
+//             $response = new Response();
+//             $response->headers->set('Content-Type', 'application/json');
+//             $response->setStatusCode(404,"error");
+//             // Allow all websites
+//             $response->headers->set('Access-Control-Allow-Origin', '*');
+//             return $response;
+//         }
         
         $evenement->setTypeEvenement($typeEvent);
         $evenement->setLat($request->get("lat"));
@@ -140,6 +142,7 @@ class ClientEvenementController extends AbstractController
         
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
+        
         $response->setContent(json_encode([
             'evenement' => $evenement,
         ]));
@@ -164,10 +167,12 @@ class ClientEvenementController extends AbstractController
         $response = new Response();
         $response->setContent(json_encode([
             'evenement' => $evenement,
-            'idClient' => $client->getId()
+            'idClient' => $client->getId(),
+            'role' => 'partenaire'
         
         ]));
         $response->headers->set('Content-Type', 'application/json');
+        
         // Allow all websites
         $response->headers->set('Access-Control-Allow-Origin', '*');
         return $response;
@@ -208,13 +213,19 @@ class ClientEvenementController extends AbstractController
      */
     public function delete(Request $request, Evenement $evenement): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $evenement->getId(), $request->request->get('_token'))) {
+//         if ($this->isCsrfTokenValid('delete' . $evenement->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($evenement);
             $entityManager->flush();
-        }
+//         }
         
-        return $this->redirectToRoute('evenement_index');
+            
+            $response = new Response();
+            $response->headers->set('Content-Type', 'application/json');
+            // Allow all websites
+            $response->headers->set('Access-Control-Allow-Origin', '*');
+            return $response;
+//         return $this->redirectToRoute('evenement_index');
     }
 
     /**

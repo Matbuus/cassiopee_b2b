@@ -76,7 +76,32 @@ class PartenaireController extends AbstractController
             'typePrestations' => $partenaire->getTypePrestations()
         ]);
     }
+    
+    
+    /**
+     * 
+     * @Route("/{id}/types_prestation", name="types_prestation_partenaire", methods={"GET"})
+     */
+    public function typesPrestation(Partenaire $partenaire): Response
+    {
+//         return $this->render('partenaire/show.html.twig', [
+//             'partenaire' => $partenaire,
+//             'typePrestations' => $partenaire->getTypePrestations()
+//         ]);
 
+        $response = new Response();
+        $response->setContent(json_encode([
+            'typePrestations' => $partenaire->getTypePrestations(),
+        ]));
+        $response->headers->set('Content-Type', 'application/json');
+        // Allow all websites
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
+    }
+    
+    
+    
+    
     /**
      *
      * @Route("/{id}/edit", name="partenaire_edit", methods={"GET","POST"})
