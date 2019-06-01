@@ -3,7 +3,6 @@ namespace App\Controller;
 
 use App\Entity\Evenement;
 use App\Entity\Prestation;
-use App\Entity\Partenaire;
 use App\Form\EvenementType;
 use App\Form\PrestationType;
 use App\Form\PartenaireType;
@@ -17,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use App\Entity\TypePrestation;
 use App\Entity\Etat;
+use App\Entity\Partenaire;
 
 /**
  *
@@ -137,7 +137,7 @@ class PartenaireController extends AbstractController
             
             $this->get('session')
                 ->getFlashBag()
-                ->add('message', 'type de prestation bien ajouté au métier');
+                ->add('message', 'type de prestation bien ajoutï¿½ au mï¿½tier');
             
             $response = $this->forward('App\Controller\PartenaireController::show', [
                 'id' => $partenaire->getId()
@@ -166,9 +166,29 @@ class PartenaireController extends AbstractController
                     $events[] = $event;
         }
         dump($events);
+        $i = 0;
+        $distevent = array();
+        foreach ($events as $evt){
+            $distance = 3956 * 2 * asin(sqrt( pow(sin(($partenaire->getLat() - $evt->getLat()) *  pi()/180 / 2) , 2) + cos($partenaire->getLat() * pi()/180) * cos($evt->getLat() * pi()/180) * pow(sin($partenaire->getLng() - $evt->getLng()) * pi()/180 / 2 ,2) ));
+            $distevent[$i] = $distance;
+            $i++;
+        }
+        $distanceEvenement=$distevent;
+        $sortedEventsIndex = array();
+        dump(count($distevent));
+        $maxdist=max($distevent);
+        for($i=1;$i<=count($distevent);$i++)
+        {
+            $mindist= min($distevent);
+            $sortedEventsIndex[$i-1]=array_keys($distevent, $mindist)[0];
+            $distevent[array_keys($distevent, $mindist)[0]]= $maxdist+1;
+        }
+        dump($sortedEventsIndex);
         return $this->render('evenement/liste_events_partenaire.html.twig', [
             'id' => $partenaire->getId(),
             'evenements' => $events,
+            'sortedEventsIndex'=> $sortedEventsIndex,
+            'distanceEvenement'=>$distanceEvenement,
         ]);
     }
     

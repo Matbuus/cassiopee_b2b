@@ -23,10 +23,10 @@ use App\Repository\TypePrestationRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
-use App\Entity\Client;
 use App\Repository\ClientRepository;
 use App\Entity\Prestation;
 use App\Entity\Etat;
+use App\Entity\Client;
 
 /**
  *

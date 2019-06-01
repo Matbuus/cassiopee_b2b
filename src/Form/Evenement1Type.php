@@ -6,6 +6,7 @@ use App\Entity\Evenement;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class Evenement1Type extends AbstractType
 {
@@ -20,8 +21,8 @@ class Evenement1Type extends AbstractType
             ->add('address')
             ->add('city')
             ->add('postal')
-            ->add('lat')
-            ->add('lng')
+            ->add('lat',HiddenType::class)
+            ->add('lng',HiddenType::class)
         ;
     }
 

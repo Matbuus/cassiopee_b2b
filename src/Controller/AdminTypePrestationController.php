@@ -1,7 +1,6 @@
 <?php
 namespace App\Controller;
 
-use App\Entity\Partenaire;
 use App\Entity\TypeEvenement;
 use App\Form\TypeEvenementType;
 use App\Form\TypePrestation1Type;
@@ -22,6 +21,7 @@ use App\Repository\TypePrestationRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Repository\PartenaireRepository;
+use App\Entity\Partenaire;
 
 /**
  *

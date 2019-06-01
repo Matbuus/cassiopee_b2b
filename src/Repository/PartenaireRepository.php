@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
-use App\Entity\Partenaire;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use App\Entity\Evenement;
+use Doctrine\ORM\Query;
+use App\Entity\Partenaire;
 
 /**
  * @method Partenaire|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,7 +20,10 @@ class PartenaireRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Partenaire::class);
     }
+    
 
+
+    
     // /**
     //  * @return Partenaire[] Returns an array of Partenaire objects
     //  */

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use JsonSerializable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Date;
+use App\Entity\Client;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EvenementRepository")

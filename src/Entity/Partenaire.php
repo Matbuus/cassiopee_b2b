@@ -27,6 +27,9 @@ class Partenaire extends Client implements JsonSerializable
      */
     private $prestationsProposees;
 
+  
+
+
     public function __construct()
     {
         $this->metiers = new ArrayCollection();

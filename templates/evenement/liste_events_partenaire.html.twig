@@ -12,17 +12,19 @@
                 <th>Titre</th>
                 <th>Date</th>
                 <th>Type d'evenement</th>
+                <th>distance en km</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for evenement in evenements %}
+        {% for index in sortedEventsIndex %}
             <tr>
-                <td>{{ evenement.id }}</td>
-                <td>{{ evenement.titre }}</td>
-                <td>{{ evenement.date ? evenement.date|date('Y-m-d') : '' }}</td>
-                <td> {{ evenement.typeEvenement.nom }} </td>
-                <td> <a href="{{ path('partenaire_proposer_prestation', {'id': id , 'id_event': evenement.id}) }}" class="btn btn-success"> Proposer prestation </a> </td>
+                <td>{{ evenements[index].id }}</td>
+                <td>{{ evenements[index].titre }}</td>
+                <td>{{ evenements[index].date ? evenements[index].date|date('Y-m-d') : '' }}</td>
+                <td>{{ evenements[index].typeEvenement.nom }} </td>
+                <td>{{ distanceEvenement[index] }} km</td>
+                <td> <a href="{{ path('partenaire_proposer_prestation', {'id': id , 'id_event': evenements[index].id}) }}" class="btn btn-success"> Proposer prestation </a> </td>
             </tr>
         {% else %}
             <tr>
@@ -32,4 +34,8 @@
         </tbody>
     </table>
     <a href="{{ path('partenaire_show', {'id': id}) }}">Back to profile</a>
+    
+    
+    
+    
 {% endblock %}

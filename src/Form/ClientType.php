@@ -2,10 +2,10 @@
 
 namespace App\Form;
 
-use App\Entity\Client;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Entity\Client;
 
 class ClientType extends AbstractType
 {
@@ -14,6 +14,11 @@ class ClientType extends AbstractType
         $builder
             ->add('nom')
             ->add('prenom')
+            ->add('address')
+            ->add('city')
+            ->add('postal')
+            ->add('lat')
+            ->add('lng')
         ;
     }
 
