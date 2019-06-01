@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use JsonSerializable;
 use Doctrine\ORM\Mapping as ORM;
+
 use App\Entity\Partenaire;
 
 

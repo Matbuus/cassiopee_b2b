@@ -6,13 +6,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use JsonSerializable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use phpDocumentor\Reflection\Types\This;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  * @ORM\MappedSuperclass()
  * @ORM\InheritanceType("SINGLE_TABLE")
  */
+
 class Client implements JsonSerializable
+
 {
     /**
      * @ORM\Id()
@@ -60,6 +64,16 @@ class Client implements JsonSerializable
      * @ORM\Column(type="integer")
      */
     protected $postal;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $email;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $password;
 
     public function __construct()
     {
@@ -146,6 +160,7 @@ class Client implements JsonSerializable
             'lng' => $this->getLng(),
             'city' => $this->getCity(),
             'postal' => $this->getPostal(),
+            'email' => $this->getEmail(),
         ];
         
     }
@@ -209,6 +224,43 @@ class Client implements JsonSerializable
 
         return $this;
     }
+    
+    
+
+   
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+    
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+
+
+    public function getUsername()
+    {
+        return $this->email;
+    }
+    
+ 
+
 
 
 }

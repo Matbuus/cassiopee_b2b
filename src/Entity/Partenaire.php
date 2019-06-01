@@ -6,10 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use JsonSerializable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PartenaireRepository")
  */
+
 class Partenaire extends Client implements JsonSerializable
 {
     /**
@@ -140,5 +142,10 @@ class Partenaire extends Client implements JsonSerializable
         ];
         
     }
+    public function getRoles()
+    {
+        return ['ROLE_PARTENAIRE'];
+    }
+
 
 }
