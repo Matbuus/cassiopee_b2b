@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Partenaire;
 use App\Entity\TypeEvenement;
 use App\Form\TypeEvenementType;
 use App\Form\TypePrestation1Type;
@@ -20,7 +21,6 @@ use App\Repository\TypePrestationRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Entity\Client;
-
 
 class LoginController extends AbstractController
 {
@@ -50,10 +50,35 @@ class LoginController extends AbstractController
             $response->headers->set('Access-Control-Allow-Origin', '*');
             return $response;
         } else {
-            $client = $em->getRepository(Client::class)->findOneBy([
+            
+            $partenaire = $em->getRepository(Partenaire::class)->findOneBy([
                 'email' => $email
             ]);
-            if ($client != null) {
+            if ($partenaire != null) {
+                if ($partenaire->getPassword() == $password) {
+                    $response = new Response();
+                    $response->setContent(json_encode([
+                        'connected' => 'true',
+                        'role' => "partenaire",
+                        'userId' => $partenaire->getId()
+                    ]));
+                    $response->headers->set('Content-Type', 'application/json');
+                    // Allow all websites
+                    $response->headers->set('Access-Control-Allow-Origin', '*');
+                    return $response;
+                } else {
+                    $response = new Response();
+                    $response->setStatusCode(404, 'error, password incorrect');
+                    $response->headers->set('Content-Type', 'application/json');
+                    // Allow all websites
+                    $response->headers->set('Access-Control-Allow-Origin', '*');
+                    return $response;
+                }
+            } else {
+                // Partenaire:
+                $client = $em->getRepository(Client::class)->findOneBy([
+                    'email' => $email
+                ]);
                 if ($client->getPassword() == $password) {
                     $response = new Response();
                     $response->setContent(json_encode([
@@ -65,8 +90,7 @@ class LoginController extends AbstractController
                     // Allow all websites
                     $response->headers->set('Access-Control-Allow-Origin', '*');
                     return $response;
-                }
-                else {
+                } else {
                     $response = new Response();
                     $response->setStatusCode(404, 'error, password incorrect');
                     $response->headers->set('Content-Type', 'application/json');
@@ -74,13 +98,14 @@ class LoginController extends AbstractController
                     $response->headers->set('Access-Control-Allow-Origin', '*');
                     return $response;
                 }
-            } else {
-                $response = new Response();
-                $response->setStatusCode(404, 'error, login incorrect');
-                $response->headers->set('Content-Type', 'application/json');
-                // Allow all websites
-                $response->headers->set('Access-Control-Allow-Origin', '*');
-                return $response;
+                if ($partenaire != null) {} else {
+                    $response = new Response();
+                    $response->setStatusCode(404, 'error, login incorrect');
+                    $response->headers->set('Content-Type', 'application/json');
+                    // Allow all websites
+                    $response->headers->set('Access-Control-Allow-Origin', '*');
+                    return $response;
+                }
             }
         }
     }

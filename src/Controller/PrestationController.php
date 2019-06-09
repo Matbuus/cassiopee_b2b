@@ -85,12 +85,18 @@ class PrestationController extends AbstractController
      */
     public function delete(Request $request, Prestation $prestation): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$prestation->getId(), $request->request->get('_token'))) {
+       // if ($this->isCsrfTokenValid('delete'.$prestation->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($prestation);
             $entityManager->flush();
-        }
+//        }
 
-        return $this->redirectToRoute('prestation_index');
+            $response = new Response();
+            $response->headers->set('Content-Type', 'application/json');
+            // Allow all websites
+            $response->headers->set('Access-Control-Allow-Origin', '*');
+            return $response;
+            
+        //return $this->redirectToRoute('prestation_index');
     }
 }

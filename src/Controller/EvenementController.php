@@ -64,9 +64,18 @@ class EvenementController extends AbstractController
      */
     public function show(Evenement $evenement): Response
     {
-        return $this->render('evenement/show.html.twig', [
+//         return $this->render('evenement/show.html.twig', [
+//             'evenement' => $evenement,
+//         ]);
+        
+        $response = new Response();
+        $response->setContent(json_encode([
             'evenement' => $evenement,
-        ]);
+        ]));
+        $response->headers->set('Content-Type', 'application/json');
+        // Allow all websites
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
     }
 
     /**
