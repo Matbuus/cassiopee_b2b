@@ -50,7 +50,7 @@ class Evenement implements JsonSerializable
     private $typeEvenement;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Prestation", mappedBy="evenement")
+     * @ORM\OneToMany(targetEntity="App\Entity\Prestation", mappedBy="evenement", orphanRemoval=true)
      */
     private $prestations;
     
@@ -275,6 +275,7 @@ class Evenement implements JsonSerializable
             'type' => $this->getTypeEvenement(),
             'lat' => $this->getLat(),
             'lng' => $this->getLng(),
+            'etatEvenement' => $this->getEtatEvenement(),
             
             ];
     }

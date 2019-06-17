@@ -141,10 +141,30 @@ class Partenaire extends Client implements JsonSerializable
             'metier' => $this->getMetier(),
             'typePrestations' => $this->getTypePrestations(),
             'prestationProposees' => $this->getPrestationsProposees(),
+            'note' => $this->getNoteTotale(),
             
         ];
         
     }
+    
+    public function getNoteTotale() : float
+    {
+        $note = 0;
+        $nb = 0;
+        foreach ($this->getPrestationsProposees() as $prestation) {
+            if ($prestation->getEtatPrestation()->getTitre() == 'Termine' && $prestation->getNote() != null){
+               $nb++;
+               $note += $prestation->getNote();
+            }
+        }
+        if($nb != 0) {
+        $this->setNote($note/$nb);
+        return $this->getNote();
+        } else {
+            return 0;
+        }
+    }
+    
     public function getRoles()
     {
         return ['ROLE_PARTENAIRE'];

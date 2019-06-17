@@ -177,6 +177,40 @@ class ClientEvenementController extends AbstractController
         $response->headers->set('Access-Control-Allow-Origin', '*');
         return $response;
     }
+    
+    
+    
+    /**
+     *
+     * @Route("/{id}/event/{id_event}/terminer", name="client_evenement_finish", methods={"GET"})
+     * @Entity("evenement",expr="repository.find(id_event)")
+     */
+    public function terminerEvenet(Client $client, Evenement $evenement): Response
+    {
+        
+        // dump($client);
+        // return $this->render('evenement/show.html.twig', [
+        // 'evenement' => $evenement,
+        // 'idClient' => $client->getId()
+        // ]);
+        
+        $em = $this->getDoctrine()->getManager();
+        $etatTermine = $em->getRepository(Etat::class)->find(10);
+        
+        $evenement->setEtatEvenement($etatTermine);
+        
+        $em->persist($evenement);
+        $em->flush();
+        
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        
+        // Allow all websites
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
+    }
+    
+    
 
     /**
      *
@@ -205,6 +239,29 @@ class ClientEvenementController extends AbstractController
             'evenement' => $evenement,
             'form' => $form->createView()
         ]);
+    }
+    
+    /**
+     *
+     * @Route("/prestation/{id}/noter", name="client_note_prestation", methods={"POST"})
+     */
+    public function noter(Request $request, Prestation $prestation): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $request->request->replace($data);
+        
+        $prestation->setNote($request->get("note"));
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($prestation);
+        $entityManager->persist($prestation->getPartenaire());
+        $entityManager->flush();
+
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        // Allow all websites
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
+        
     }
 
     /**
@@ -240,7 +297,8 @@ class ClientEvenementController extends AbstractController
         $etatProposer = $em->getRepository(Etat::class)->find(11);
         $etatAccepter = $em->getRepository(Etat::class)->find(12);
         $etatRefuser = $em->getRepository(Etat::class)->find(13);
-        $listePrestations = $evenement->getPrestations();
+        $etatTermine = $em->getRepository(Etat::class)->find(10);
+        $listePrestations = $evenement->getPrestations()->toArray();
         
         $listeProposer = $em->getRepository(Prestation::class)->findBy(array(
             "evenement" => $evenement,
@@ -254,15 +312,34 @@ class ClientEvenementController extends AbstractController
             "evenement" => $evenement,
             "etatPrestation" => $etatRefuser
         ));
+        $listeTermine = $em->getRepository(Prestation::class)->findBy(array(
+            "evenement" => $evenement,
+            "etatPrestation" => $etatTermine
+        ));
         
-        return $this->render('evenement/listePrestations.html.twig', [
-            'evenement' => $evenement,
-            'idClient' => $client->getId(),
+//         return $this->render('evenement/listePrestations.html.twig', [
+//             'evenement' => $evenement,
+//             'idClient' => $client->getId(),
+//             'listePrestation' => $listePrestations,
+//             'listeProposer' => $listeProposer,
+//             'listeAccepter' => $listeAccepter,
+//             'listeRefuser' => $listeRefuser
+//         ]);
+        
+        $response = new Response();
+        $response->setContent(json_encode([
             'listePrestation' => $listePrestations,
             'listeProposer' => $listeProposer,
             'listeAccepter' => $listeAccepter,
-            'listeRefuser' => $listeRefuser
-        ]);
+            'listeRefuser' => $listeRefuser,
+            'listeTermine' => $listeTermine,
+            
+        ]));
+        $response->headers->set('Content-Type', 'application/json');
+        
+        // Allow all websites
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
     }
 
     /**
@@ -273,11 +350,21 @@ class ClientEvenementController extends AbstractController
      */
     public function afficherDescription(Client $client, Evenement $evenement, Prestation $prestation): Response
     {
-        return $this->render('prestation/show_prestation_client.html.twig', [
-            'evenement' => $evenement,
-            'idClient' => $client->getId(),
-            'prestation' => $prestation
-        ]);
+//         return $this->render('prestation/show_prestation_client.html.twig', [
+//             'evenement' => $evenement,
+//             'idClient' => $client->getId(),
+//             'prestation' => $prestation
+//         ]);
+        
+        $response = new Response();
+        $response->setContent(json_encode([
+            'prestation' => $prestation,  
+        ]));
+        $response->headers->set('Content-Type', 'application/json');
+        
+        // Allow all websites
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
     }
 
     /**
@@ -290,6 +377,7 @@ class ClientEvenementController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $etatAccepter = $em->getRepository(Etat::class)->find(12);
+        $etatTermine = $em->getRepository(Etat::class)->find(10);
         $etatProposer = $em->getRepository(Etat::class)->find(11);
         $etatRefuser = $em->getRepository(Etat::class)->find(13);
         if ($action == "confirmer") {
@@ -298,6 +386,10 @@ class ClientEvenementController extends AbstractController
         if ($action == "refuser") {
             $prestation->setEtatPrestation($etatRefuser);
         }
+        if ($action == "termine") {
+            $prestation->setEtatPrestation($etatTermine);
+        }
+        
         $em->persist($prestation);
         $em->flush();
         
@@ -310,12 +402,26 @@ class ClientEvenementController extends AbstractController
         $listeProposer = $em->getRepository(Prestation::class)->findBy([
             "etatPrestation" => $etatProposer
         ]);
-        return $this->redirectToRoute('client_evenement_prestations', [
-            'id_event' => $evenement->getId(),
-            'id' => $client->getId(),
+        
+//         return $this->redirectToRoute('client_evenement_prestations', [
+//             'id_event' => $evenement->getId(),
+//             'id' => $client->getId(),
+//             'listeProposer' => $listeProposer,
+//             'listeAccepter' => $listeAccepter,
+//             'listeRefuser' => $listeRefuser
+//         ]);
+        
+        $response = new Response();
+        $response->setContent(json_encode([
             'listeProposer' => $listeProposer,
             'listeAccepter' => $listeAccepter,
             'listeRefuser' => $listeRefuser
-        ]);
+            
+        ]));
+        $response->headers->set('Content-Type', 'application/json');
+        
+        // Allow all websites
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
     }
 }

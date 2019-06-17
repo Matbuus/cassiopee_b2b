@@ -75,6 +75,11 @@ class Client implements JsonSerializable
      */
     protected $password;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $note;
+
     public function __construct()
     {
         $this->evenements = new ArrayCollection();
@@ -257,6 +262,18 @@ class Client implements JsonSerializable
     public function getUsername()
     {
         return $this->email;
+    }
+
+    public function getNote(): ?float
+    {
+        return $this->note;
+    }
+
+    public function setNote(?float $note): self
+    {
+        $this->note = $note;
+
+        return $this;
     }
     
  

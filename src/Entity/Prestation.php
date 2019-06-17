@@ -54,6 +54,11 @@ class Prestation implements JsonSerializable
      */
     private $typePrestation;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $note;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -142,8 +147,21 @@ class Prestation implements JsonSerializable
             'partenaire' => $this->getPartenaire(),
             'etatPrestation' => $this->getEtatPrestation(),
             'typePrestation' => $this->getTypePrestation(),
+            'note' => $this->getNote(),
             
         ];
+    }
+
+    public function getNote(): ?float
+    {
+        return $this->note;
+    }
+
+    public function setNote(?float $note): self
+    {
+        $this->note = $note;
+
+        return $this;
     }
 
 }
